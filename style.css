@@ -661,3 +661,486 @@ body.toothbrush-theme .memory-card:nth-child(even) {
     }
 
 }
+
+
+/* =========================================
+   THE OFFICIAL 4LIFERS AGREEMENT
+========================================= */
+
+.contract-section {
+    min-height: 100vh;
+    padding: 110px 25px;
+    text-align: center;
+    background-color: var(--section);
+    transition: background-color 0.8s ease;
+}
+
+.contract-container {
+    max-width: 850px;
+    margin: auto;
+}
+
+.contract-intro {
+    color: var(--muted);
+    font-size: 16px;
+    margin: 15px auto 45px;
+    line-height: 1.7;
+}
+
+.contract-paper {
+    position: relative;
+    max-width: 720px;
+    margin: auto;
+    padding: 45px 55px;
+    background: #fffdf5;
+    color: #71583b;
+    text-align: left;
+    border: 1px solid #e6d4aa;
+    outline: 5px double #e6d4aa;
+    outline-offset: -13px;
+    box-shadow: 0 15px 35px rgba(90, 65, 30, 0.13);
+    transition: transform 0.5s ease, background 0.8s ease;
+}
+
+.contract-top {
+    text-align: center;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e6d4aa;
+}
+
+.contract-number {
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #b49a6e;
+}
+
+.contract-flower {
+    font-size: 35px;
+    color: #d6ad55;
+    margin: 15px 0;
+}
+
+.contract-top h2 {
+    font-size: 27px;
+    font-weight: normal;
+    letter-spacing: 2px;
+    line-height: 1.4;
+}
+
+.contract-subtitle {
+    font-size: 12px;
+    font-style: italic;
+    color: #a58a64;
+    margin-top: 10px;
+}
+
+.contract-body {
+    padding-top: 28px;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.contract-body > p {
+    margin-bottom: 25px;
+}
+
+.contract-body h3 {
+    font-size: 16px;
+    font-weight: normal;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.contract-terms {
+    padding-left: 25px;
+    margin-bottom: 35px;
+}
+
+.contract-terms li {
+    padding-left: 8px;
+    margin-bottom: 12px;
+}
+
+.contract-special-clause {
+    padding: 25px;
+    margin: 30px 0;
+    background: #fff8e7;
+    border: 1px dashed #d8b86f;
+    border-radius: 5px;
+}
+
+.clause-label {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #b18c48;
+    margin-bottom: 8px;
+}
+
+.contract-special-clause h3 {
+    font-size: 22px;
+    letter-spacing: 0;
+    margin-bottom: 15px;
+}
+
+.contract-special-clause p {
+    margin-bottom: 13px;
+}
+
+.contract-special-clause .cheesy-line {
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-style: italic;
+    color: #a17b42;
+}
+
+.contract-disclaimer {
+    padding: 20px 0;
+    border-top: 1px solid #e6d4aa;
+    border-bottom: 1px solid #e6d4aa;
+}
+
+.contract-disclaimer h3 {
+    font-size: 13px;
+}
+
+.contract-disclaimer ul {
+    padding-left: 22px;
+}
+
+.contract-disclaimer li {
+    margin-bottom: 7px;
+}
+
+.contract-signing {
+    padding-top: 35px;
+}
+
+.contract-signing > p {
+    margin-bottom: 20px;
+}
+
+.contract-signing > label:not(.contract-checkbox) {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+#signerName {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 22px;
+    border: 1px solid #d9c69e;
+    background: #fffef9;
+    color: #71583b;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    outline: none;
+    border-radius: 4px;
+}
+
+#signerName:focus {
+    border-color: #c69e4e;
+    box-shadow: 0 0 0 3px rgba(198, 158, 78, 0.12);
+}
+
+.contract-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 17px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+.contract-checkbox input {
+    margin-top: 5px;
+    accent-color: #b58b42;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.optional-clause {
+    padding: 20px;
+    margin-top: 30px;
+    background: #faf1dc;
+    border-radius: 5px;
+}
+
+.optional-clause > p {
+    margin-bottom: 10px;
+}
+
+.optional-note {
+    font-size: 11px;
+    color: #a58a64;
+    font-style: italic;
+}
+
+.sign-button {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    background: #b58b42;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.sign-button:hover {
+    background: #967036;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(90, 65, 30, 0.15);
+}
+
+.contract-error {
+    min-height: 18px;
+    margin-top: 12px;
+    color: #b45b4c;
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* =========================================
+   APPROVED CERTIFICATE
+========================================= */
+
+.contract-certificate {
+    display: none;
+    position: relative;
+    margin-top: 35px;
+    padding: 45px 25px;
+    text-align: center;
+    background: #fff8e7;
+    border: 3px double #c6a15b;
+    animation: certificateReveal 0.9s ease;
+}
+
+.contract-certificate.show {
+    display: block;
+}
+
+.contract-certificate .approved-stamp {
+    display: inline-block;
+    padding: 8px 18px;
+    margin-bottom: 25px;
+    border: 3px solid #a84f42;
+    color: #a84f42;
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    transform: rotate(-9deg);
+}
+
+.certificate-label {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #a58a64;
+}
+
+.contract-certificate h2 {
+    font-size: 43px;
+    font-weight: normal;
+    letter-spacing: 5px;
+    margin: 10px 0 20px;
+    color: #80613a;
+}
+
+.contract-certificate h3 {
+    font-size: 27px;
+    font-weight: normal;
+    font-style: italic;
+    margin: 18px 0;
+    color: #a17b42;
+    overflow-wrap: anywhere;
+}
+
+.contract-certificate > p {
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.certificate-status {
+    margin-top: 30px;
+    padding: 12px;
+    background: #f0dfb7;
+    color: #765a37;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.future-status {
+    margin-top: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #a17b42;
+}
+
+.certificate-footer {
+    margin-top: 25px;
+    font-style: italic;
+    color: #a58a64;
+}
+
+
+/* =========================================
+   TOOTHBRUSH THEME: CONTRACT
+========================================= */
+
+body.toothbrush-theme .contract-section {
+    background-color: #eee7ff;
+    background-image: radial-gradient(#d9c2ef 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+body.toothbrush-theme .contract-paper {
+    background: #fffaff;
+    color: #614b72;
+    border: 2px dashed #c9a5df;
+    outline: none;
+    box-shadow: 6px 7px 0 rgba(185, 140, 210, 0.2);
+    transform: rotate(-0.5deg);
+}
+
+body.toothbrush-theme .contract-top {
+    border-color: #ddc4ed;
+}
+
+body.toothbrush-theme .contract-flower {
+    color: #d49be9;
+}
+
+body.toothbrush-theme .contract-number,
+body.toothbrush-theme .contract-subtitle,
+body.toothbrush-theme .clause-label {
+    color: #9874b2;
+}
+
+body.toothbrush-theme .contract-special-clause {
+    background: #f7edff;
+    border-color: #c79bdf;
+}
+
+body.toothbrush-theme .contract-special-clause .cheesy-line {
+    color: #9874b2;
+}
+
+body.toothbrush-theme .contract-disclaimer {
+    border-color: #ddc4ed;
+}
+
+body.toothbrush-theme #signerName {
+    background: #fffaff;
+    color: #614b72;
+    border-color: #ddc4ed;
+}
+
+body.toothbrush-theme .optional-clause {
+    background: #f5eaff;
+}
+
+body.toothbrush-theme .sign-button {
+    background: #a879c5;
+}
+
+body.toothbrush-theme .sign-button:hover {
+    background: #895da8;
+}
+
+body.toothbrush-theme .contract-certificate {
+    background: #fffaff;
+    border-color: #c79bdf;
+}
+
+body.toothbrush-theme .contract-certificate .approved-stamp {
+    color: #a65e91;
+    border-color: #a65e91;
+}
+
+body.toothbrush-theme .contract-certificate h2,
+body.toothbrush-theme .contract-certificate h3 {
+    color: #9874b2;
+}
+
+body.toothbrush-theme .certificate-status {
+    background: #ead9fa;
+    color: #614b72;
+}
+
+
+/* =========================================
+   CONTRACT ANIMATION
+========================================= */
+
+@keyframes certificateReveal {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =========================================
+   CONTRACT: MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 700px) {
+
+    .contract-section {
+        padding: 80px 18px;
+    }
+
+    .contract-paper {
+        padding: 35px 25px;
+        outline-offset: -9px;
+    }
+
+    .contract-top h2 {
+        font-size: 21px;
+    }
+
+    .contract-body {
+        font-size: 13px;
+    }
+
+    .contract-special-clause {
+        padding: 18px;
+    }
+
+    .contract-special-clause h3 {
+        font-size: 20px;
+    }
+
+    .contract-certificate {
+        padding: 35px 18px;
+    }
+
+    .contract-certificate h2 {
+        font-size: 34px;
+    }
+
+    .contract-certificate h3 {
+        font-size: 23px;
+    }
+
+}
