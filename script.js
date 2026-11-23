@@ -1,21 +1,18 @@
 
-// Get the website elements
+// Get website elements
 
 const openingScreen = document.getElementById("openingScreen");
 const birthdayScreen = document.getElementById("birthdayScreen");
 
 
-// Detect when the opening screen is clicked
+// Opening screen interaction
 
 openingScreen.addEventListener("click", function(event) {
-
-    // Get the position of the click
 
     const x = event.clientX;
     const y = event.clientY;
 
-
-    // Create the expanding sunshine circle
+    // Create sunshine animation
 
     const sunshine = document.createElement("div");
 
@@ -24,20 +21,15 @@ openingScreen.addEventListener("click", function(event) {
     sunshine.style.left = (x - 10) + "px";
     sunshine.style.top = (y - 10) + "px";
 
-
-    // Add the circle to the website
-
     document.body.appendChild(sunshine);
 
-
-    // Start the expansion animation
+    // Expand the circle
 
     requestAnimationFrame(function() {
         sunshine.classList.add("expand");
     });
 
-
-    // Reveal the birthday screen
+    // Reveal birthday greeting
 
     setTimeout(function() {
 
@@ -48,6 +40,5 @@ openingScreen.addEventListener("click", function(event) {
         sunshine.remove();
 
     }, 1000);
-
 
 }, { once: true });
