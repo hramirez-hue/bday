@@ -44,10 +44,9 @@ body {
     border-left: 110px solid transparent;
     border-right: 110px solid transparent;
     border-top: 85px solid #d9a94e;
-    z-index: 2;
+    z-index: 3;
 }
 
-/* Letter */
 .letter {
     position: absolute;
     background-color: #fffdf5;
@@ -59,6 +58,8 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 3px;
+    z-index: 1;
+    transition: transform 0.8s ease;
 }
 
 .letter p {
