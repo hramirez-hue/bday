@@ -12,9 +12,7 @@ html {
 }
 
 body {
-    background-color: #fff8e7;
     font-family: Georgia, serif;
-    color: #765a37;
     overflow-x: hidden;
     transition: background-color 0.8s ease, color 0.8s ease;
 }
@@ -30,9 +28,7 @@ body.yellow-theme {
     --accent: #e3b951;
     --card: #fffdf5;
     --shadow: rgba(100, 75, 40, 0.12);
-}
 
-body.yellow-theme {
     background-color: var(--background);
     color: var(--text);
 }
@@ -48,9 +44,7 @@ body.toothbrush-theme {
     --accent: #ed91b8;
     --card: #fffaff;
     --shadow: rgba(100, 65, 110, 0.15);
-}
 
-body.toothbrush-theme {
     background-color: var(--background);
     color: var(--text);
 }
@@ -105,7 +99,7 @@ body.toothbrush-theme {
     position: fixed;
     top: 20px;
     right: 20px;
-    width: 280px;
+    width: 290px;
     padding: 17px;
     border-radius: 15px;
     background: rgba(255, 253, 245, 0.96);
@@ -113,7 +107,16 @@ body.toothbrush-theme {
     box-shadow: 0 8px 25px rgba(80, 60, 30, 0.12);
     z-index: 5000;
     backdrop-filter: blur(10px);
-    transition: background 0.6s ease, border 0.6s ease;
+
+    /* Hidden until the opening transition finishes */
+
+    display: none;
+    opacity: 0;
+}
+
+.music-player.visible {
+    display: block;
+    animation: playerEntrance 0.8s ease forwards;
 }
 
 .music-player-heading {
@@ -132,7 +135,7 @@ body.toothbrush-theme {
 }
 
 .music-message {
-    font-size: 14px;
+    font-size: 15px;
     color: #765a37;
     margin-bottom: 13px;
 }
@@ -145,7 +148,7 @@ body.toothbrush-theme {
 
 .song-button {
     flex: 1;
-    padding: 8px 5px;
+    padding: 9px 5px;
     border: 1px solid #eadbbd;
     border-radius: 20px;
     background: transparent;
@@ -156,7 +159,7 @@ body.toothbrush-theme {
 }
 
 .song-button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px) rotate(-2deg);
 }
 
 .song-button.active {
@@ -171,13 +174,7 @@ body.toothbrush-theme {
     align-items: center;
 }
 
-.song-info p {
-    font-size: 14px;
-    color: #765a37;
-    margin-bottom: 3px;
-}
-
-.song-info span {
+.player-status {
     font-size: 11px;
     color: #a58a64;
 }
@@ -227,11 +224,7 @@ body.toothbrush-theme .song-button.active {
     border-color: #c79bdf;
 }
 
-body.toothbrush-theme .song-info p {
-    color: #614b72;
-}
-
-body.toothbrush-theme .song-info span {
+body.toothbrush-theme .player-status {
     color: #967ca5;
 }
 
@@ -443,8 +436,7 @@ body.toothbrush-theme .play-button {
 
 body.toothbrush-theme .gallery-section,
 body.toothbrush-theme .together-section {
-    background-image:
-        radial-gradient(#e8c8f5 1px, transparent 1px);
+    background-image: radial-gradient(#e8c8f5 1px, transparent 1px);
     background-size: 22px 22px;
 }
 
@@ -580,6 +572,18 @@ body.toothbrush-theme .memory-card:nth-child(even) {
     }
 }
 
+@keyframes playerEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* MOBILE RESPONSIVENESS */
 
@@ -650,7 +654,7 @@ body.toothbrush-theme .memory-card:nth-child(even) {
     }
 
     .music-player {
-        width: 245px;
+        width: 270px;
         top: 12px;
         right: 12px;
         padding: 13px;
