@@ -23,43 +23,71 @@ body {
     padding: 20px;
 }
 
+
 /* Envelope */
 .envelope {
     width: 220px;
     height: 145px;
-    background-color: #e8bd62;
     position: relative;
     margin-bottom: 35px;
+    background: #e8bd62;
     border-radius: 5px;
     box-shadow: 0 8px 20px rgba(100, 75, 30, 0.15);
+    isolation: isolate;
+}
+
+/* Letter */
+.letter {
+    position: absolute;
+    width: 180px;
+    height: 115px;
+    left: 20px;
+    bottom: 10px;
+    background: #fffdf5;
+    border-radius: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1;
+    transition: transform 0.8s ease;
+}
+
+.letter p {
+    font-size: 20px;
+    color: #9b7540;
+}
+
+/* Envelope front */
+.envelope::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #e8bd62;
+    clip-path: polygon(0 0, 50% 65%, 100% 0, 100% 100%, 0 100%);
+    z-index: 2;
+    border-radius: 5px;
 }
 
 /* Envelope flap */
 .envelope-flap {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 110px solid transparent;
-    border-right: 110px solid transparent;
-    border-top: 85px solid #d9a94e;
+    inset: 0;
+    background: #d9a94e;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.8s ease;
     z-index: 3;
 }
 
-.letter {
-    position: absolute;
-    background-color: #fffdf5;
-    width: 180px;
-    height: 115px;
-    left: 20px;
-    top: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    z-index: 1;
-    transition: transform 0.8s ease;
+/* Opening animation */
+.envelope.open .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.envelope.open .letter {
+    transform: translateY(-65px);
 }
 
 .letter p {
