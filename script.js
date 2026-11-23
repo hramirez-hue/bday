@@ -1,15 +1,13 @@
 
-const openButton = document.getElementById("openButton");
-const envelope = document.querySelector(".envelope");
-const heading = document.querySelector("h1");
-const description = document.querySelector(".welcome > p");
+const openingScreen = document.getElementById("openingScreen");
 
-openButton.addEventListener("click", function() {
+openingScreen.addEventListener("click", function() {
 
-    envelope.classList.add("open");
+    openingScreen.style.transition = "opacity 0.8s ease";
+    openingScreen.style.opacity = "0";
 
-    heading.textContent = "Happy Birthday! ♡";
-    description.textContent = "Today is all about you. I hope you enjoy this little surprise.";
+    setTimeout(function() {
+        openingScreen.style.display = "none";
+    }, 800);
 
-    openButton.textContent = "Let's go!";
 });
