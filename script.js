@@ -4,42 +4,32 @@
 const openingScreen = document.getElementById("openingScreen");
 const birthdayScreen = document.getElementById("birthdayScreen");
 
+const musicPlayer = document.getElementById("musicPlayer");
+const musicAudio = document.getElementById("musicAudio");
+const playMusic = document.getElementById("playMusic");
+
+const playerStatus = document.getElementById("playerStatus");
+const songButtons = document.querySelectorAll(".song-button");
+
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightboxImage");
 const lightboxCaption = document.getElementById("lightboxCaption");
 const closeLightbox = document.getElementById("closeLightbox");
 
 
-// MUSIC PLAYER ELEMENTS
-
-const musicAudio = document.getElementById("musicAudio");
-const playMusic = document.getElementById("playMusic");
-
-const songTitle = document.getElementById("songTitle");
-const songArtist = document.getElementById("songArtist");
-const musicMessage = document.getElementById("musicMessage");
-
-const songButtons = document.querySelectorAll(".song-button");
-
-
 // SONG INFORMATION
+// The actual song names are kept out of the visible player.
 
 const songs = {
 
     yellow: {
-        title: "Yellow",
-        artist: "Coldplay",
         file: "music/yellow.mp3",
-        theme: "yellow-theme",
-        message: "This song reminds me of you."
+        theme: "yellow-theme"
     },
 
     toothbrush: {
-        title: "Toothbrush",
-        artist: "DANCE!",
         file: "music/toothbrush.mp3",
-        theme: "toothbrush-theme",
-        message: "A little something for a little fun."
+        theme: "toothbrush-theme"
     }
 
 };
@@ -61,13 +51,7 @@ function selectSong(songName) {
 
     currentSong = songName;
 
-    // Change the song information
-
-    songTitle.textContent = song.title;
-    songArtist.textContent = song.artist;
-    musicMessage.textContent = song.message;
-
-    // Change the active song button
+    // Update selected button
 
     songButtons.forEach(function(button) {
 
@@ -79,7 +63,7 @@ function selectSong(songName) {
 
     });
 
-    // Change the website theme
+    // Change website theme
 
     document.body.classList.remove(
         "yellow-theme",
@@ -88,22 +72,32 @@ function selectSong(songName) {
 
     document.body.classList.add(song.theme);
 
-    // Load the selected song
+    // Load selected song
+
+    musicAudio.pause();
 
     musicAudio.src = song.file;
     musicAudio.load();
 
     playMusic.textContent = "▶";
 
-    // Keep playing if music was already playing
+    playerStatus.textContent = "Your choice, your soundtrack.";
+
+    // Continue playing if the previous song was playing
 
     if (wasPlaying) {
 
         musicAudio.play().then(function() {
+
             playMusic.textContent = "Ⅱ";
+            playerStatus.textContent = "Playing your pick...";
+
         }).catch(function(error) {
+
             console.log("Playback could not start:", error);
-            playMusic.textContent = "▶";
+
+            playerStatus.textContent = "Press play when you're ready.";
+
         });
 
     }
@@ -133,14 +127,14 @@ playMusic.addEventListener("click", function() {
         musicAudio.play().then(function() {
 
             playMusic.textContent = "Ⅱ";
+            playerStatus.textContent = "Playing your pick...";
 
         }).catch(function(error) {
 
             console.log("Unable to play audio:", error);
 
             playMusic.textContent = "▶";
-
-            alert("The song couldn't play. Please check the music file.");
+            playerStatus.textContent = "Couldn't load the song. Check the file.";
 
         });
 
@@ -149,20 +143,21 @@ playMusic.addEventListener("click", function() {
         musicAudio.pause();
 
         playMusic.textContent = "▶";
+        playerStatus.textContent = "Paused. Take your time.";
 
     }
 
 });
 
 
-// UPDATE BUTTON WHEN AUDIO STOPS
-
-musicAudio.addEventListener("pause", function() {
-    playMusic.textContent = "▶";
-});
+// AUDIO PLAYBACK EVENTS
 
 musicAudio.addEventListener("play", function() {
     playMusic.textContent = "Ⅱ";
+});
+
+musicAudio.addEventListener("pause", function() {
+    playMusic.textContent = "▶";
 });
 
 
@@ -184,13 +179,13 @@ openingScreen.addEventListener("click", function(event) {
 
     document.body.appendChild(sunshine);
 
-    // Expand the circle
+    // Expand the sunshine circle
 
     requestAnimationFrame(function() {
         sunshine.classList.add("expand");
     });
 
-    // Reveal birthday greeting
+    // Reveal birthday section and music player
 
     setTimeout(function() {
 
@@ -199,6 +194,10 @@ openingScreen.addEventListener("click", function(event) {
         birthdayScreen.style.display = "flex";
 
         sunshine.remove();
+
+        // Reveal music player after transition
+
+        musicPlayer.classList.add("visible");
 
     }, 1000);
 
