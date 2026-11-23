@@ -107,9 +107,6 @@ body.toothbrush-theme {
     box-shadow: 0 8px 25px rgba(80, 60, 30, 0.12);
     z-index: 5000;
     backdrop-filter: blur(10px);
-
-    /* Hidden until the opening transition finishes */
-
     display: none;
     opacity: 0;
 }
@@ -1141,6 +1138,372 @@ body.toothbrush-theme .certificate-status {
 
     .contract-certificate h3 {
         font-size: 23px;
+    }
+
+}
+
+
+/* =========================================
+   INTERACTIVE LITTLE MESSAGE
+========================================= */
+
+.message-section {
+    min-height: 100vh;
+    padding: 110px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--background);
+    transition: background-color 0.8s ease;
+}
+
+.message-container {
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+}
+
+.message-container h1 {
+    font-size: 42px;
+    font-weight: normal;
+    color: var(--text);
+    margin-bottom: 18px;
+}
+
+.message-intro {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 45px;
+}
+
+
+/* ENVELOPE BUTTON */
+
+.envelope-button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 15px;
+    font-family: Georgia, serif;
+}
+
+.envelope {
+    position: relative;
+    display: block;
+    width: 230px;
+    height: 155px;
+    perspective: 900px;
+    filter: drop-shadow(0 12px 12px rgba(100, 75, 40, 0.13));
+    transition: transform 0.4s ease;
+}
+
+.envelope-button:hover .envelope {
+    transform: translateY(-7px) rotate(-2deg);
+}
+
+.envelope-body {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: #e8bd62;
+    border-radius: 5px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope-body::before,
+.envelope-body::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.envelope-body::before {
+    left: 0;
+    border-width: 78px 115px 0 0;
+    border-color: #dcae54 transparent transparent transparent;
+}
+
+.envelope-body::after {
+    right: 0;
+    border-width: 78px 0 0 115px;
+    border-color: #f0cc7e transparent transparent transparent;
+}
+
+.envelope-letter-peek {
+    position: absolute;
+    z-index: 1;
+    left: 15px;
+    right: 15px;
+    top: 8px;
+    height: 125px;
+    padding-top: 20px;
+    background: #fffdf5;
+    color: #a58a64;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: transform 0.7s ease;
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    z-index: 3;
+    border-left: 115px solid transparent;
+    border-right: 115px solid transparent;
+    border-top: 90px solid #f4d58e;
+    transform-origin: top center;
+    transition: transform 0.7s ease, z-index 0.2s ease;
+}
+
+.envelope-seal {
+    position: absolute;
+    z-index: 4;
+    top: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #fff3cf;
+    color: #b58b42;
+    font-size: 21px;
+    transition: opacity 0.3s ease;
+}
+
+.envelope-hint {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    animation: blink 2s infinite;
+}
+
+
+/* ENVELOPE OPEN ANIMATION */
+
+.envelope-button.is-open .envelope-flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope-button.is-open .envelope-letter-peek {
+    transform: translateY(-75px);
+}
+
+.envelope-button.is-open .envelope-seal {
+    opacity: 0;
+}
+
+
+/* THE LETTER */
+
+.message-letter {
+    max-width: 540px;
+    margin: 45px auto 0;
+    padding: 45px 40px;
+    background: #fffdf5;
+    color: #765a37;
+    border: 1px solid #eadbbd;
+    box-shadow: 0 12px 30px rgba(100, 75, 40, 0.1);
+    border-radius: 5px;
+    text-align: center;
+    line-height: 1.9;
+    animation: letterReveal 0.9s ease both;
+}
+
+.message-letter[hidden],
+.final-message[hidden] {
+    display: none !important;
+}
+
+.letter-decoration {
+    font-size: 35px;
+    color: #d6ad55;
+    margin-bottom: 15px;
+}
+
+.letter-label {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #b49a6e;
+    margin-bottom: 15px;
+}
+
+.message-letter h2 {
+    font-size: 29px;
+    font-weight: normal;
+    margin-bottom: 25px;
+}
+
+.message-letter > p:not(.letter-label) {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.message-letter .letter-ending {
+    font-style: italic;
+    color: #a17b42;
+    margin-top: 25px;
+}
+
+
+/* FINAL BUTTON */
+
+.feelings-button {
+    margin-top: 15px;
+    padding: 13px 20px;
+    border: 1px solid #d8b86f;
+    border-radius: 30px;
+    background: transparent;
+    color: #8b7659;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.feelings-button:hover {
+    background: #f5e5bc;
+    transform: translateY(-3px);
+}
+
+.final-message {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px dashed #d8b86f;
+    color: #a17b42;
+    font-size: 13px;
+    font-style: italic;
+    animation: letterReveal 0.7s ease both;
+}
+
+
+/* MESSAGE SECTION: TOOTHBRUSH THEME */
+
+body.toothbrush-theme .message-section {
+    background-color: #eee7ff;
+    background-image: radial-gradient(#d9c2ef 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+body.toothbrush-theme .envelope {
+    filter: drop-shadow(6px 7px 0 rgba(185, 140, 210, 0.18));
+}
+
+body.toothbrush-theme .envelope-body {
+    background: #c99be5;
+}
+
+body.toothbrush-theme .envelope-body::before {
+    border-color: #b987d9 transparent transparent transparent;
+}
+
+body.toothbrush-theme .envelope-body::after {
+    border-color: #d9b5ed transparent transparent transparent;
+}
+
+body.toothbrush-theme .envelope-flap {
+    border-top-color: #e3c5f5;
+}
+
+body.toothbrush-theme .envelope-seal {
+    background: #fff0fa;
+    color: #a879c5;
+}
+
+body.toothbrush-theme .message-letter {
+    background: #fffaff;
+    color: #614b72;
+    border: 2px dashed #c9a5df;
+    box-shadow: 6px 7px 0 rgba(185, 140, 210, 0.18);
+    transform: rotate(-0.5deg);
+}
+
+body.toothbrush-theme .letter-decoration {
+    color: #d49be9;
+}
+
+body.toothbrush-theme .letter-label {
+    color: #9874b2;
+}
+
+body.toothbrush-theme .message-letter .letter-ending,
+body.toothbrush-theme .final-message {
+    color: #9874b2;
+}
+
+body.toothbrush-theme .feelings-button {
+    border-color: #c79bdf;
+    color: #806b91;
+}
+
+body.toothbrush-theme .feelings-button:hover {
+    background: #ead9fa;
+}
+
+
+/* LETTER ANIMATION */
+
+@keyframes letterReveal {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* MESSAGE SECTION: MOBILE */
+
+@media (max-width: 700px) {
+
+    .message-section {
+        padding: 85px 20px;
+    }
+
+    .message-container h1 {
+        font-size: 32px;
+    }
+
+    .message-intro {
+        font-size: 14px;
+    }
+
+    .envelope {
+        transform: scale(0.9);
+    }
+
+    .message-letter {
+        padding: 35px 23px;
+    }
+
+    .message-letter h2 {
+        font-size: 25px;
+    }
+
+    .message-letter > p:not(.letter-label) {
+        font-size: 13px;
     }
 
 }
