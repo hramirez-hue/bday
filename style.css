@@ -16,6 +16,43 @@ body {
     font-family: Georgia, serif;
     color: #765a37;
     overflow-x: hidden;
+    transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+
+/* YELLOW THEME */
+
+body.yellow-theme {
+    --background: #fff8e7;
+    --section: #f9efd9;
+    --text: #765a37;
+    --muted: #a58a64;
+    --accent: #e3b951;
+    --card: #fffdf5;
+    --shadow: rgba(100, 75, 40, 0.12);
+}
+
+body.yellow-theme {
+    background-color: var(--background);
+    color: var(--text);
+}
+
+
+/* TOOTHBRUSH THEME */
+
+body.toothbrush-theme {
+    --background: #fff0f5;
+    --section: #eee7ff;
+    --text: #614b72;
+    --muted: #967ca5;
+    --accent: #ed91b8;
+    --card: #fffaff;
+    --shadow: rgba(100, 65, 110, 0.15);
+}
+
+body.toothbrush-theme {
+    background-color: var(--background);
+    color: var(--text);
 }
 
 
@@ -35,7 +72,7 @@ body {
 
 .flower {
     font-size: 65px;
-    color: #e3b951;
+    color: var(--accent);
     margin-bottom: 25px;
     animation: float 3s ease-in-out infinite;
 }
@@ -48,7 +85,7 @@ body {
 
 .opening-screen p {
     font-size: 17px;
-    color: #a58a64;
+    color: var(--muted);
 }
 
 .continue-text {
@@ -57,8 +94,149 @@ body {
     font-family: Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 3px;
-    color: #b59a70;
+    color: var(--muted);
     animation: blink 2s infinite;
+}
+
+
+/* MUSIC PLAYER */
+
+.music-player {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    padding: 17px;
+    border-radius: 15px;
+    background: rgba(255, 253, 245, 0.96);
+    border: 1px solid #eadbbd;
+    box-shadow: 0 8px 25px rgba(80, 60, 30, 0.12);
+    z-index: 5000;
+    backdrop-filter: blur(10px);
+    transition: background 0.6s ease, border 0.6s ease;
+}
+
+.music-player-heading {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #a58a64;
+    margin-bottom: 10px;
+}
+
+.music-player-heading span:first-child {
+    font-size: 17px;
+}
+
+.music-message {
+    font-size: 14px;
+    color: #765a37;
+    margin-bottom: 13px;
+}
+
+.song-options {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 13px;
+}
+
+.song-button {
+    flex: 1;
+    padding: 8px 5px;
+    border: 1px solid #eadbbd;
+    border-radius: 20px;
+    background: transparent;
+    color: #8b7659;
+    font-size: 11px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.song-button:hover {
+    transform: translateY(-2px);
+}
+
+.song-button.active {
+    background: #f5e5bc;
+    color: #765a37;
+    border-color: #e3b951;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.song-info p {
+    font-size: 14px;
+    color: #765a37;
+    margin-bottom: 3px;
+}
+
+.song-info span {
+    font-size: 11px;
+    color: #a58a64;
+}
+
+.play-button {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #e3b951;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
+
+
+/* MUSIC PLAYER: TOOTHBRUSH THEME */
+
+body.toothbrush-theme .music-player {
+    background: rgba(255, 248, 255, 0.97);
+    border: 2px dashed #d7a5e9;
+    box-shadow: 5px 7px 0 rgba(204, 156, 226, 0.2);
+    transform: rotate(1deg);
+}
+
+body.toothbrush-theme .music-player-heading {
+    color: #9874b2;
+}
+
+body.toothbrush-theme .music-message {
+    color: #614b72;
+}
+
+body.toothbrush-theme .song-button {
+    border-color: #ddc4ed;
+    color: #806b91;
+}
+
+body.toothbrush-theme .song-button.active {
+    background: #ead9fa;
+    color: #614b72;
+    border-color: #c79bdf;
+}
+
+body.toothbrush-theme .song-info p {
+    color: #614b72;
+}
+
+body.toothbrush-theme .song-info span {
+    color: #967ca5;
+}
+
+body.toothbrush-theme .play-button {
+    background: #d49be9;
 }
 
 
@@ -71,7 +249,8 @@ body {
     align-items: center;
     text-align: center;
     padding: 60px 25px;
-    background-color: #fff8e7;
+    background-color: var(--background);
+    transition: background-color 0.8s ease;
 }
 
 .birthday-content {
@@ -80,7 +259,7 @@ body {
 }
 
 .birthday-content .flower {
-    color: #e3b951;
+    color: var(--accent);
     margin-bottom: 15px;
 }
 
@@ -88,20 +267,20 @@ body {
     font-family: Arial, sans-serif;
     font-size: 11px;
     letter-spacing: 4px;
-    color: #b18c4f;
+    color: var(--muted);
     margin-bottom: 20px;
 }
 
 .birthday-content h1 {
     font-size: 58px;
     font-weight: normal;
-    color: #765a37;
+    color: var(--text);
     margin-bottom: 18px;
 }
 
 .birthday-subtitle {
     font-size: 18px;
-    color: #a58a64;
+    color: var(--muted);
     margin-bottom: 35px;
 }
 
@@ -109,7 +288,7 @@ body {
     max-width: 520px;
     margin: auto;
     line-height: 1.9;
-    color: #8b7659;
+    color: var(--muted);
     font-size: 15px;
 }
 
@@ -122,26 +301,24 @@ body {
     font-family: Arial, sans-serif;
     font-size: 10px;
     letter-spacing: 3px;
-    color: #b59a70;
+    color: var(--muted);
     animation: blink 2s infinite;
 }
 
 
-/* SHARED GALLERY STYLING */
+/* GALLERY SECTIONS */
 
 .gallery-section,
 .together-section {
     min-height: 100vh;
     padding: 100px 30px;
     text-align: center;
-}
-
-.gallery-section {
-    background-color: #f9efd9;
+    background-color: var(--section);
+    transition: background-color 0.8s ease;
 }
 
 .together-section {
-    background-color: #fff8e7;
+    background-color: var(--background);
 }
 
 .gallery-heading {
@@ -153,10 +330,11 @@ body {
     font-size: 42px;
     font-weight: normal;
     margin-bottom: 15px;
+    color: var(--text);
 }
 
 .gallery-heading > p:last-child {
-    color: #a58a64;
+    color: var(--muted);
     font-size: 16px;
     line-height: 1.7;
 }
@@ -177,10 +355,10 @@ body {
 .polaroid {
     width: 230px;
     padding: 12px 12px 25px;
-    background-color: #fffdf5;
-    box-shadow: 0 8px 20px rgba(100, 75, 40, 0.12);
+    background-color: var(--card);
+    box-shadow: 0 8px 20px var(--shadow);
     transform: rotate(-2deg);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, background 0.6s ease;
 }
 
 .polaroid:nth-child(3) {
@@ -197,7 +375,6 @@ body {
 
 .polaroid:hover {
     transform: rotate(0deg) translateY(-8px);
-    box-shadow: 0 15px 28px rgba(100, 75, 40, 0.18);
 }
 
 .polaroid img {
@@ -211,7 +388,7 @@ body {
 .polaroid p {
     margin-top: 18px;
     font-size: 16px;
-    color: #765a37;
+    color: var(--text);
 }
 
 
@@ -228,10 +405,10 @@ body {
 .memory-card {
     grid-column: span 2;
     padding: 10px 10px 20px;
-    background-color: #fffdf5;
-    box-shadow: 0 8px 20px rgba(100, 75, 40, 0.10);
+    background-color: var(--card);
+    box-shadow: 0 8px 20px var(--shadow);
     transform: rotate(-1deg);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, background 0.6s ease;
 }
 
 .memory-card:nth-child(2),
@@ -245,7 +422,6 @@ body {
 
 .memory-card:hover {
     transform: translateY(-8px) rotate(0deg);
-    box-shadow: 0 15px 28px rgba(100, 75, 40, 0.18);
 }
 
 .memory-card img {
@@ -259,11 +435,40 @@ body {
 .memory-card p {
     margin-top: 16px;
     font-size: 15px;
-    color: #765a37;
+    color: var(--text);
 }
 
 
-/* SCROLL REVEAL ANIMATION */
+/* TOOTHBRUSH SCRAPBOOK DETAILS */
+
+body.toothbrush-theme .gallery-section,
+body.toothbrush-theme .together-section {
+    background-image:
+        radial-gradient(#e8c8f5 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+body.toothbrush-theme .polaroid,
+body.toothbrush-theme .memory-card {
+    border: 2px dashed #d9b5e8;
+    border-radius: 5px;
+    box-shadow: 5px 6px 0 rgba(185, 140, 210, 0.18);
+}
+
+body.toothbrush-theme .polaroid:nth-child(even) {
+    transform: rotate(3deg);
+}
+
+body.toothbrush-theme .polaroid:nth-child(odd) {
+    transform: rotate(-3deg);
+}
+
+body.toothbrush-theme .memory-card:nth-child(even) {
+    transform: rotate(-3deg);
+}
+
+
+/* SCROLL REVEAL */
 
 .reveal {
     opacity: 0;
@@ -321,7 +526,6 @@ body {
     max-height: 75vh;
     object-fit: contain;
     border: 10px solid #fffdf5;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
 }
 
 .lightbox p {
@@ -443,6 +647,13 @@ body {
 
     .close-lightbox {
         right: 20px;
+    }
+
+    .music-player {
+        width: 245px;
+        top: 12px;
+        right: 12px;
+        padding: 13px;
     }
 
 }
