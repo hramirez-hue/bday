@@ -9,9 +9,10 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="yellow-theme">
 
-    <!-- Opening Screen -->
+    <!-- OPENING SCREEN -->
+
     <section class="opening-screen" id="openingScreen">
 
         <div class="flower">✿</div>
@@ -27,7 +28,51 @@
     </section>
 
 
-    <!-- Birthday Section -->
+    <!-- MUSIC PLAYER -->
+
+    <div class="music-player" id="musicPlayer">
+
+        <div class="music-player-heading">
+            <span>♫</span>
+            <span>A LITTLE MUSIC FOR YOU</span>
+        </div>
+
+        <p class="music-message" id="musicMessage">
+            This song reminds me of you.
+        </p>
+
+        <div class="song-options">
+
+            <button class="song-button active" data-song="yellow">
+                ☀ Yellow
+            </button>
+
+            <button class="song-button" data-song="toothbrush">
+                ✿ Toothbrush
+            </button>
+
+        </div>
+
+        <div class="player-controls">
+
+            <div class="song-info">
+                <p id="songTitle">Yellow</p>
+                <span id="songArtist">Coldplay</span>
+            </div>
+
+            <button id="playMusic" class="play-button">
+                ▶
+            </button>
+
+        </div>
+
+        <audio id="musicAudio" loop></audio>
+
+    </div>
+
+
+    <!-- BIRTHDAY SECTION -->
+
     <section class="birthday-screen" id="birthdayScreen">
 
         <div class="birthday-content">
@@ -66,7 +111,8 @@
     </section>
 
 
-    <!-- Gallery: Her Pictures -->
+    <!-- GALLERY: HER PICTURES -->
+
     <section class="gallery-section">
 
         <div class="gallery-heading reveal">
@@ -113,7 +159,8 @@
     </section>
 
 
-    <!-- Gallery: Pictures Together -->
+    <!-- GALLERY: PICTURES TOGETHER -->
+
     <section class="together-section">
 
         <div class="gallery-heading reveal">
@@ -160,7 +207,8 @@
     </section>
 
 
-    <!-- Enlarged Photo Preview -->
+    <!-- PHOTO LIGHTBOX -->
+
     <div class="lightbox" id="lightbox">
 
         <span class="close-lightbox" id="closeLightbox">&times;</span>
