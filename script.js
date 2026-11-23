@@ -1,10 +1,14 @@
 
-// =========================================
+// ==========================================
 // GET WEBSITE ELEMENTS
-// =========================================
+// ==========================================
+
+// Opening and birthday screens
 
 const openingScreen = document.getElementById("openingScreen");
 const birthdayScreen = document.getElementById("birthdayScreen");
+
+// Music player
 
 const musicPlayer = document.getElementById("musicPlayer");
 const musicAudio = document.getElementById("musicAudio");
@@ -13,13 +17,14 @@ const playMusic = document.getElementById("playMusic");
 const playerStatus = document.getElementById("playerStatus");
 const songButtons = document.querySelectorAll(".song-button");
 
+// Photo lightbox
+
 const lightbox = document.getElementById("lightbox");
 const lightboxImage = document.getElementById("lightboxImage");
 const lightboxCaption = document.getElementById("lightboxCaption");
 const closeLightbox = document.getElementById("closeLightbox");
 
-
-// CONTRACT ELEMENTS
+// Contract elements
 
 const signerName = document.getElementById("signerName");
 const agreeContract = document.getElementById("agreeContract");
@@ -34,21 +39,29 @@ const contractCertificate = document.getElementById("contractCertificate");
 const certificateName = document.getElementById("certificateName");
 const futureStatus = document.getElementById("futureStatus");
 
+// Interactive message elements
 
-// =========================================
-// SONG INFORMATION
-// =========================================
-// Actual song names stay hidden from the player.
+const openLetter = document.getElementById("openLetter");
+const messageLetter = document.getElementById("messageLetter");
+const envelopeHint = document.getElementById("envelopeHint");
+
+const closeFeelings = document.getElementById("closeFeelings");
+const finalLine = document.getElementById("finalLine");
+
+
+// ==========================================
+// MUSIC PLAYER
+// ==========================================
 
 const songs = {
 
     yellow: {
-        file: "music/yellow.mp3",
+        source: "music/yellow.mp3",
         theme: "yellow-theme"
     },
 
     toothbrush: {
-        file: "music/toothbrush.mp3",
+        source: "music/toothbrush.mp3",
         theme: "toothbrush-theme"
     }
 
@@ -57,15 +70,11 @@ const songs = {
 let currentSong = "yellow";
 
 
-// =========================================
-// CHANGE SONG AND WEBSITE THEME
-// =========================================
+// SELECT A SONG
 
 function selectSong(songName) {
 
-    const song = songs[songName];
-
-    if (!song) {
+    if (!songs[songName]) {
         return;
     }
 
@@ -73,9 +82,9 @@ function selectSong(songName) {
 
     currentSong = songName;
 
-    // Update selected button
+    // Update selected song button
 
-    songButtons.forEach(function(button) {
+    songButtons.forEach(button => {
 
         button.classList.remove("active");
 
@@ -92,33 +101,39 @@ function selectSong(songName) {
         "toothbrush-theme"
     );
 
-    document.body.classList.add(song.theme);
+    document.body.classList.add(songs[songName].theme);
 
-    // Load selected song
+    // Change audio source
 
-    musicAudio.pause();
+    const newSource = songs[songName].source;
 
-    musicAudio.src = song.file;
-    musicAudio.load();
+    if (!musicAudio.src.endsWith(newSource)) {
 
-    playMusic.textContent = "▶";
+        musicAudio.src = newSource;
 
-    playerStatus.textContent = "Your choice, your soundtrack.";
+        musicAudio.load();
 
-    // Continue playing if the previous song was playing
+    }
+
+    // Update player status
+
+    if (songName === "yellow") {
+
+        playerStatus.textContent = "A little sunshine for you. ☀";
+
+    } else {
+
+        playerStatus.textContent = "A little something different. ✿";
+
+    }
+
+    // Continue playing if music was already playing
 
     if (wasPlaying) {
 
-        musicAudio.play().then(function() {
+        musicAudio.play().catch(() => {
 
-            playMusic.textContent = "Ⅱ";
-            playerStatus.textContent = "Playing your pick...";
-
-        }).catch(function(error) {
-
-            console.log("Playback could not start:", error);
-
-            playerStatus.textContent = "Press play when you're ready.";
+            playerStatus.textContent = "Press play to continue.";
 
         });
 
@@ -127,40 +142,30 @@ function selectSong(songName) {
 }
 
 
-// =========================================
-// SONG SELECTION BUTTONS
-// =========================================
+// SONG BUTTON EVENTS
 
-songButtons.forEach(function(button) {
+songButtons.forEach(button => {
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", () => {
 
-        selectSong(button.dataset.song);
+        const selectedSong = button.dataset.song;
+
+        selectSong(selectedSong);
 
     });
 
 });
 
 
-// =========================================
 // PLAY AND PAUSE BUTTON
-// =========================================
 
-playMusic.addEventListener("click", function() {
+playMusic.addEventListener("click", () => {
 
     if (musicAudio.paused) {
 
-        musicAudio.play().then(function() {
+        musicAudio.play().catch(() => {
 
-            playMusic.textContent = "Ⅱ";
-            playerStatus.textContent = "Playing your pick...";
-
-        }).catch(function(error) {
-
-            console.log("Unable to play audio:", error);
-
-            playMusic.textContent = "▶";
-            playerStatus.textContent = "Couldn't load the song. Check the file.";
+            playerStatus.textContent = "Unable to play this song.";
 
         });
 
@@ -168,7 +173,34 @@ playMusic.addEventListener("click", function() {
 
         musicAudio.pause();
 
-        playMusic.textContent = "▶";
+    }
+
+});
+
+
+// UPDATE BUTTON WHEN MUSIC PLAYS
+
+musicAudio.addEventListener("play", () => {
+
+    playMusic.textContent = "Ⅱ";
+
+    playMusic.setAttribute("aria-label", "Pause music");
+
+    playerStatus.textContent = "Now playing. ♫";
+
+});
+
+
+// UPDATE BUTTON WHEN MUSIC PAUSES
+
+musicAudio.addEventListener("pause", () => {
+
+    playMusic.textContent = "▶";
+
+    playMusic.setAttribute("aria-label", "Play music");
+
+    if (musicAudio.currentTime > 0) {
+
         playerStatus.textContent = "Paused. Take your time.";
 
     }
@@ -176,25 +208,11 @@ playMusic.addEventListener("click", function() {
 });
 
 
-// AUDIO PLAYBACK EVENTS
+// ==========================================
+// OPENING SCREEN TRANSITION
+// ==========================================
 
-musicAudio.addEventListener("play", function() {
-    playMusic.textContent = "Ⅱ";
-});
-
-musicAudio.addEventListener("pause", function() {
-    playMusic.textContent = "▶";
-});
-
-
-// =========================================
-// OPENING SCREEN INTERACTION
-// =========================================
-
-openingScreen.addEventListener("click", function(event) {
-
-    const x = event.clientX;
-    const y = event.clientY;
+openingScreen.addEventListener("click", (event) => {
 
     // Create sunshine animation
 
@@ -202,79 +220,102 @@ openingScreen.addEventListener("click", function(event) {
 
     sunshine.classList.add("sunshine");
 
-    sunshine.style.left = (x - 10) + "px";
-    sunshine.style.top = (y - 10) + "px";
+    sunshine.style.left = event.clientX + "px";
+    sunshine.style.top = event.clientY + "px";
 
     document.body.appendChild(sunshine);
 
-    // Expand sunshine circle
+    // Start animation
 
-    requestAnimationFrame(function() {
+    requestAnimationFrame(() => {
+
         sunshine.classList.add("expand");
+
     });
 
-    // Reveal birthday section and music player
+    // Prevent multiple clicks
 
-    setTimeout(function() {
+    openingScreen.style.pointerEvents = "none";
+
+    // Reveal birthday screen and music player
+
+    setTimeout(() => {
 
         openingScreen.style.display = "none";
 
         birthdayScreen.style.display = "flex";
 
-        sunshine.remove();
-
         musicPlayer.classList.add("visible");
+
+        // Remove transition element
+
+        sunshine.remove();
 
     }, 1000);
 
-}, { once: true });
+});
 
 
-// =========================================
-// SCROLL REVEAL ANIMATION
-// =========================================
+// ==========================================
+// SCROLL REVEAL ANIMATIONS
+// ==========================================
 
 const revealElements = document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver(function(entries, observer) {
+const revealObserver = new IntersectionObserver((entries) => {
 
-    entries.forEach(function(entry) {
+    entries.forEach(entry => {
 
         if (entry.isIntersecting) {
 
             entry.target.classList.add("visible");
 
-            observer.unobserve(entry.target);
+            revealObserver.unobserve(entry.target);
 
         }
 
     });
 
 }, {
+
     threshold: 0.15
+
 });
 
-revealElements.forEach(function(element) {
-    observer.observe(element);
+revealElements.forEach(element => {
+
+    revealObserver.observe(element);
+
 });
 
 
-// =========================================
-// OPEN PHOTO LIGHTBOX
-// =========================================
+// ==========================================
+// PHOTO LIGHTBOX
+// ==========================================
 
 const galleryPhotos = document.querySelectorAll(".gallery-photo");
 
-galleryPhotos.forEach(function(photo) {
 
-    photo.addEventListener("click", function() {
+// OPEN PHOTO
+
+galleryPhotos.forEach(photo => {
+
+    photo.addEventListener("click", () => {
 
         lightboxImage.src = photo.src;
 
-        const caption = photo.parentElement.querySelector("p");
+        lightboxImage.alt = photo.alt;
 
-        if (caption) {
+        const caption = photo.nextElementSibling;
+
+        if (caption && caption.tagName === "P") {
+
             lightboxCaption.textContent = caption.textContent;
+
+        } else {
+
+            lightboxCaption.textContent = "";
+
         }
 
         lightbox.classList.add("active");
@@ -284,59 +325,59 @@ galleryPhotos.forEach(function(photo) {
 });
 
 
-// =========================================
-// CLOSE PHOTO LIGHTBOX
-// =========================================
+// CLOSE PHOTO
 
-function closePhotoPreview() {
+function hideLightbox() {
 
     lightbox.classList.remove("active");
 
-    lightboxImage.src = "";
-
 }
 
-closeLightbox.addEventListener("click", closePhotoPreview);
+
+// CLOSE BUTTON
+
+closeLightbox.addEventListener("click", hideLightbox);
 
 
-// CLOSE WHEN CLICKING OUTSIDE THE PHOTO
+// CLICK OUTSIDE PHOTO
 
-lightbox.addEventListener("click", function(event) {
+lightbox.addEventListener("click", (event) => {
 
     if (event.target === lightbox) {
-        closePhotoPreview();
+
+        hideLightbox();
+
     }
 
 });
 
 
-// =========================================
-// CLOSE USING ESCAPE KEY
-// =========================================
+// CLOSE WITH ESCAPE KEY
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", (event) => {
 
     if (event.key === "Escape") {
-        closePhotoPreview();
+
+        hideLightbox();
+
     }
 
 });
 
 
-// =========================================
-// THE OFFICIAL 4LIFERS AGREEMENT
-// =========================================
+// ==========================================
+// 4LIFERS CONTRACT SIGNING
+// ==========================================
 
-signContract.addEventListener("click", function() {
+signContract.addEventListener("click", () => {
 
     const name = signerName.value.trim();
 
-    // Check if a name was entered
+    // Check if name was entered
 
     if (name === "") {
 
-        contractError.textContent =
-            "The contract needs a name, your honor. 💀";
+        contractError.textContent = "Please enter your name first.";
 
         signerName.focus();
 
@@ -344,26 +385,26 @@ signContract.addEventListener("click", function() {
 
     }
 
-    // Check if the agreement was accepted
+    // Check if agreement was accepted
 
     if (!agreeContract.checked) {
 
         contractError.textContent =
-            "You must agree to the 4Lifers terms first!";
+            "You must agree to the 4Lifers terms first. :(";
 
         return;
 
     }
 
-    // Clear previous error messages
+    // Clear error message
 
     contractError.textContent = "";
 
-    // Put the signed name on the certificate
+    // Display signed name
 
     certificateName.textContent = name;
 
-    // Update the optional romantic clause
+    // Update optional clause status
 
     if (moreOption.checked) {
 
@@ -377,21 +418,111 @@ signContract.addEventListener("click", function() {
 
     }
 
-    // Hide the signing form
+    // Hide signing form
 
     contractSigning.style.display = "none";
 
-    // Reveal the approved certificate
+    // Reveal certificate
 
     contractCertificate.classList.add("show");
 
-    // Scroll to the certificate
+    // Scroll to certificate
 
-    setTimeout(function() {
+    contractCertificate.scrollIntoView({
 
-        contractCertificate.scrollIntoView({
+        behavior: "smooth",
+
+        block: "center"
+
+    });
+
+});
+
+
+// ==========================================
+// INTERACTIVE ENVELOPE
+// ==========================================
+
+// OPEN THE ENVELOPE
+
+openLetter.addEventListener("click", () => {
+
+    // Prevent reopening
+
+    if (openLetter.classList.contains("is-open")) {
+
+        return;
+
+    }
+
+    // Play envelope opening animation
+
+    openLetter.classList.add("is-open");
+
+    // Update accessibility state
+
+    openLetter.setAttribute("aria-expanded", "true");
+
+    // Update envelope hint
+
+    envelopeHint.textContent = "YOUR NOTE IS OPEN ♡";
+
+    // Reveal the letter
+
+    messageLetter.hidden = false;
+
+    // Scroll to the revealed letter
+
+    setTimeout(() => {
+
+        messageLetter.scrollIntoView({
+
             behavior: "smooth",
+
             block: "center"
+
+        });
+
+    }, 450);
+
+});
+
+
+// ==========================================
+// FINAL LITTLE MESSAGE
+// ==========================================
+
+// CLICK THE FEELINGS BUTTON
+
+closeFeelings.addEventListener("click", () => {
+
+    // Reveal the final message
+
+    finalLine.hidden = false;
+
+    // Change button text
+
+    closeFeelings.textContent =
+        "EMOTIONAL DAMAGE: MINIMAL ✓";
+
+    // Disable button after clicking
+
+    closeFeelings.disabled = true;
+
+    closeFeelings.style.cursor = "default";
+
+    closeFeelings.style.opacity = "0.7";
+
+    // Scroll to final message
+
+    setTimeout(() => {
+
+        finalLine.scrollIntoView({
+
+            behavior: "smooth",
+
+            block: "center"
+
         });
 
     }, 200);
@@ -399,8 +530,11 @@ signContract.addEventListener("click", function() {
 });
 
 
-// =========================================
-// INITIALIZE DEFAULT SONG
-// =========================================
+// ==========================================
+// INITIAL WEBSITE SETTINGS
+// ==========================================
+
+// Select the default song and theme
 
 selectSong("yellow");
+
