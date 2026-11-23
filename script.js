@@ -1,5 +1,7 @@
 
+// =========================================
 // GET WEBSITE ELEMENTS
+// =========================================
 
 const openingScreen = document.getElementById("openingScreen");
 const birthdayScreen = document.getElementById("birthdayScreen");
@@ -17,8 +19,26 @@ const lightboxCaption = document.getElementById("lightboxCaption");
 const closeLightbox = document.getElementById("closeLightbox");
 
 
+// CONTRACT ELEMENTS
+
+const signerName = document.getElementById("signerName");
+const agreeContract = document.getElementById("agreeContract");
+const moreOption = document.getElementById("moreOption");
+
+const signContract = document.getElementById("signContract");
+const contractError = document.getElementById("contractError");
+
+const contractSigning = document.getElementById("contractSigning");
+const contractCertificate = document.getElementById("contractCertificate");
+
+const certificateName = document.getElementById("certificateName");
+const futureStatus = document.getElementById("futureStatus");
+
+
+// =========================================
 // SONG INFORMATION
-// The actual song names are kept out of the visible player.
+// =========================================
+// Actual song names stay hidden from the player.
 
 const songs = {
 
@@ -37,7 +57,9 @@ const songs = {
 let currentSong = "yellow";
 
 
+// =========================================
 // CHANGE SONG AND WEBSITE THEME
+// =========================================
 
 function selectSong(songName) {
 
@@ -105,7 +127,9 @@ function selectSong(songName) {
 }
 
 
+// =========================================
 // SONG SELECTION BUTTONS
+// =========================================
 
 songButtons.forEach(function(button) {
 
@@ -118,7 +142,9 @@ songButtons.forEach(function(button) {
 });
 
 
+// =========================================
 // PLAY AND PAUSE BUTTON
+// =========================================
 
 playMusic.addEventListener("click", function() {
 
@@ -161,7 +187,9 @@ musicAudio.addEventListener("pause", function() {
 });
 
 
+// =========================================
 // OPENING SCREEN INTERACTION
+// =========================================
 
 openingScreen.addEventListener("click", function(event) {
 
@@ -179,7 +207,7 @@ openingScreen.addEventListener("click", function(event) {
 
     document.body.appendChild(sunshine);
 
-    // Expand the sunshine circle
+    // Expand sunshine circle
 
     requestAnimationFrame(function() {
         sunshine.classList.add("expand");
@@ -195,8 +223,6 @@ openingScreen.addEventListener("click", function(event) {
 
         sunshine.remove();
 
-        // Reveal music player after transition
-
         musicPlayer.classList.add("visible");
 
     }, 1000);
@@ -204,7 +230,9 @@ openingScreen.addEventListener("click", function(event) {
 }, { once: true });
 
 
+// =========================================
 // SCROLL REVEAL ANIMATION
+// =========================================
 
 const revealElements = document.querySelectorAll(".reveal");
 
@@ -231,7 +259,9 @@ revealElements.forEach(function(element) {
 });
 
 
+// =========================================
 // OPEN PHOTO LIGHTBOX
+// =========================================
 
 const galleryPhotos = document.querySelectorAll(".gallery-photo");
 
@@ -254,7 +284,9 @@ galleryPhotos.forEach(function(photo) {
 });
 
 
+// =========================================
 // CLOSE PHOTO LIGHTBOX
+// =========================================
 
 function closePhotoPreview() {
 
@@ -278,7 +310,9 @@ lightbox.addEventListener("click", function(event) {
 });
 
 
+// =========================================
 // CLOSE USING ESCAPE KEY
+// =========================================
 
 document.addEventListener("keydown", function(event) {
 
@@ -289,6 +323,84 @@ document.addEventListener("keydown", function(event) {
 });
 
 
+// =========================================
+// THE OFFICIAL 4LIFERS AGREEMENT
+// =========================================
+
+signContract.addEventListener("click", function() {
+
+    const name = signerName.value.trim();
+
+    // Check if a name was entered
+
+    if (name === "") {
+
+        contractError.textContent =
+            "The contract needs a name, your honor. 💀";
+
+        signerName.focus();
+
+        return;
+
+    }
+
+    // Check if the agreement was accepted
+
+    if (!agreeContract.checked) {
+
+        contractError.textContent =
+            "You must agree to the 4Lifers terms first!";
+
+        return;
+
+    }
+
+    // Clear previous error messages
+
+    contractError.textContent = "";
+
+    // Put the signed name on the certificate
+
+    certificateName.textContent = name;
+
+    // Update the optional romantic clause
+
+    if (moreOption.checked) {
+
+        futureStatus.textContent =
+            "FUTURE POSSIBILITIES: OPEN TO EXPLORING ♡";
+
+    } else {
+
+        futureStatus.textContent =
+            "FUTURE POSSIBILITIES: PENDING";
+
+    }
+
+    // Hide the signing form
+
+    contractSigning.style.display = "none";
+
+    // Reveal the approved certificate
+
+    contractCertificate.classList.add("show");
+
+    // Scroll to the certificate
+
+    setTimeout(function() {
+
+        contractCertificate.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }, 200);
+
+});
+
+
+// =========================================
 // INITIALIZE DEFAULT SONG
+// =========================================
 
 selectSong("yellow");
