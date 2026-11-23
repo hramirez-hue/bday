@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>A Little Something for You</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="yellow-theme">
 
     <!-- OPENING SCREEN -->
@@ -34,33 +33,32 @@
 
         <div class="music-player-heading">
             <span>♫</span>
-            <span>A LITTLE MUSIC FOR YOU</span>
+            <span>A LITTLE SOUNDTRACK</span>
         </div>
 
-        <p class="music-message" id="musicMessage">
-            This song reminds me of you.
+        <p class="music-message">
+            Pick your poison.
         </p>
 
         <div class="song-options">
 
             <button class="song-button active" data-song="yellow">
-                ☀ Yellow
+                ☀ Corny version
             </button>
 
             <button class="song-button" data-song="toothbrush">
-                ✿ Toothbrush
+                ✿ Fav
             </button>
 
         </div>
 
         <div class="player-controls">
 
-            <div class="song-info">
-                <p id="songTitle">Yellow</p>
-                <span id="songArtist">Coldplay</span>
-            </div>
+            <p class="player-status" id="playerStatus">
+                Your choice, your soundtrack.
+            </p>
 
-            <button id="playMusic" class="play-button">
+            <button id="playMusic" class="play-button" aria-label="Play music">
                 ▶
             </button>
 
