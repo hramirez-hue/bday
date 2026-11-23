@@ -7,11 +7,14 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #fff8e7;
     font-family: Georgia, serif;
     color: #765a37;
-    overflow: hidden;
 }
 
 
@@ -66,28 +69,60 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 20px;
-    background-color: #e8bd62;
+    padding: 60px 25px;
+    background-color: #fff8e7;
 }
 
 .birthday-content {
+    max-width: 650px;
     animation: fadeIn 1.5s ease;
 }
 
 .birthday-content .flower {
-    color: #fffdf5;
-}
-
-.birthday-content h1 {
-    font-size: 48px;
-    font-weight: normal;
-    color: #fffdf5;
+    color: #e3b951;
     margin-bottom: 15px;
 }
 
-.birthday-content p {
-    color: #fff8e7;
-    font-size: 17px;
+.small-heading {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #b18c4f;
+    margin-bottom: 20px;
+}
+
+.birthday-content h1 {
+    font-size: 58px;
+    font-weight: normal;
+    color: #765a37;
+    margin-bottom: 18px;
+}
+
+.birthday-subtitle {
+    font-size: 18px;
+    color: #a58a64;
+    margin-bottom: 35px;
+}
+
+.birthday-message {
+    max-width: 520px;
+    margin: auto;
+    line-height: 1.9;
+    color: #8b7659;
+    font-size: 15px;
+}
+
+.birthday-message p {
+    margin-bottom: 18px;
+}
+
+.scroll-prompt {
+    margin-top: 55px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #b59a70;
+    animation: blink 2s infinite;
 }
 
 
@@ -104,7 +139,6 @@ body {
     transform: scale(0);
     z-index: 9999;
     pointer-events: none;
-
     transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -152,14 +186,20 @@ body {
 
 @media (max-width: 600px) {
 
-    .opening-screen h1,
-    .birthday-content h1 {
+    .opening-screen h1 {
         font-size: 36px;
     }
 
-    .opening-screen p,
-    .birthday-content p {
-        font-size: 15px;
+    .birthday-content h1 {
+        font-size: 42px;
+    }
+
+    .birthday-subtitle {
+        font-size: 16px;
+    }
+
+    .birthday-message {
+        font-size: 14px;
     }
 
     .flower {
