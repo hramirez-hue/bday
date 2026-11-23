@@ -15,6 +15,7 @@ body {
     background-color: #fff8e7;
     font-family: Georgia, serif;
     color: #765a37;
+    overflow-x: hidden;
 }
 
 
@@ -126,6 +127,156 @@ body {
 }
 
 
+/* SHARED GALLERY STYLING */
+
+.gallery-section,
+.together-section {
+    min-height: 100vh;
+    padding: 100px 30px;
+    text-align: center;
+}
+
+.gallery-section {
+    background-color: #f9efd9;
+}
+
+.together-section {
+    background-color: #fff8e7;
+}
+
+.gallery-heading {
+    margin: 0 auto 65px;
+    max-width: 650px;
+}
+
+.gallery-heading h1 {
+    font-size: 42px;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+
+.gallery-heading > p:last-child {
+    color: #a58a64;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* HER PHOTO GALLERY */
+
+.photo-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 35px;
+    max-width: 1050px;
+    margin: auto;
+}
+
+.polaroid {
+    width: 230px;
+    padding: 12px 12px 25px;
+    background-color: #fffdf5;
+    box-shadow: 0 8px 20px rgba(100, 75, 40, 0.12);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.polaroid:nth-child(3) {
+    transform: rotate(1deg);
+}
+
+.polaroid:nth-child(4) {
+    transform: rotate(-3deg);
+}
+
+.polaroid:nth-child(5) {
+    transform: rotate(2deg);
+}
+
+.polaroid:hover {
+    transform: rotate(0deg) translateY(-8px);
+    box-shadow: 0 15px 28px rgba(100, 75, 40, 0.18);
+}
+
+.polaroid img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+    cursor: zoom-in;
+}
+
+.polaroid p {
+    margin-top: 18px;
+    font-size: 16px;
+    color: #765a37;
+}
+
+
+/* TOGETHER GALLERY */
+
+.together-gallery {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 25px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.memory-card {
+    grid-column: span 2;
+    padding: 10px 10px 20px;
+    background-color: #fffdf5;
+    box-shadow: 0 8px 20px rgba(100, 75, 40, 0.10);
+    transform: rotate(-1deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.memory-card:nth-child(2),
+.memory-card:nth-child(4) {
+    transform: rotate(2deg);
+}
+
+.memory-card:nth-child(4) {
+    grid-column: 2 / span 2;
+}
+
+.memory-card:hover {
+    transform: translateY(-8px) rotate(0deg);
+    box-shadow: 0 15px 28px rgba(100, 75, 40, 0.18);
+}
+
+.memory-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    cursor: zoom-in;
+}
+
+.memory-card p {
+    margin-top: 16px;
+    font-size: 15px;
+    color: #765a37;
+}
+
+
+/* SCROLL REVEAL ANIMATION */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
 /* SUNSHINE TRANSITION */
 
 .sunshine {
@@ -144,6 +295,50 @@ body {
 
 .sunshine.expand {
     transform: scale(200);
+}
+
+
+/* PHOTO LIGHTBOX */
+
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    background-color: rgba(40, 30, 18, 0.92);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 20px;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 75vh;
+    object-fit: contain;
+    border: 10px solid #fffdf5;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+}
+
+.lightbox p {
+    color: #fff8e7;
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.close-lightbox {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff8e7;
+    font-family: Arial, sans-serif;
+    font-size: 40px;
+    cursor: pointer;
 }
 
 
@@ -184,7 +379,7 @@ body {
 
 /* MOBILE RESPONSIVENESS */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
     .opening-screen h1 {
         font-size: 36px;
@@ -204,6 +399,50 @@ body {
 
     .flower {
         font-size: 55px;
+    }
+
+    .gallery-section,
+    .together-section {
+        padding: 80px 20px;
+    }
+
+    .gallery-heading h1 {
+        font-size: 32px;
+    }
+
+    .photo-gallery {
+        gap: 25px;
+    }
+
+    .polaroid {
+        width: min(230px, 85vw);
+    }
+
+    .together-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .memory-card,
+    .memory-card:nth-child(4) {
+        grid-column: span 1;
+    }
+
+    .memory-card img {
+        height: 170px;
+    }
+
+    .memory-card p {
+        font-size: 13px;
+    }
+
+    .lightbox img {
+        max-width: 95%;
+        max-height: 70vh;
+    }
+
+    .close-lightbox {
+        right: 20px;
     }
 
 }
