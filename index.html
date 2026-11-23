@@ -446,6 +446,94 @@
     </section>
 
 
+    <!-- INTERACTIVE LITTLE MESSAGE -->
+
+    <section class="message-section" id="messageSection">
+
+        <div class="message-container reveal">
+
+            <p class="small-heading">ONE LAST LITTLE THING</p>
+
+            <h1>A little something for you</h1>
+
+            <p class="message-intro">
+                Before you go, there's something I'd like you to open.
+            </p>
+
+            <button
+                type="button"
+                class="envelope-button"
+                id="openLetter"
+                aria-expanded="false"
+                aria-controls="messageLetter"
+            >
+
+                <span class="envelope" aria-hidden="true">
+
+                    <span class="envelope-letter-peek">
+                        A little note ♡
+                    </span>
+
+                    <span class="envelope-body"></span>
+
+                    <span class="envelope-flap"></span>
+
+                    <span class="envelope-seal">✿</span>
+
+                </span>
+
+                <span class="envelope-hint" id="envelopeHint">
+                    CLICK TO OPEN
+                </span>
+
+            </button>
+
+
+            <!-- THE LETTER -->
+
+            <article class="message-letter" id="messageLetter" hidden>
+
+                <div class="letter-decoration">✿</div>
+
+                <p class="letter-label">JUST FOR YOU</p>
+
+                <h2>Before You Go...</h2>
+
+                <p>
+                    Just wanted to say that I'm glad I got to know you.
+                    Thank you for all the laughs, random conversations,
+                    and little moments that made this whole thing worth
+                    putting together. I hope today treats you kindly,
+                    and I hope the year ahead brings you plenty of
+                    reasons to smile.
+                </p>
+
+                <p class="letter-ending">
+                    Anyway, that's enough wholesomeness for today.
+                    Don't let it get to your head. :)
+                </p>
+
+                <button
+                    type="button"
+                    class="feelings-button"
+                    id="closeFeelings"
+                >
+                    OKAY, THAT'S ENOUGH FEELINGS
+                </button>
+
+                <p class="final-message" id="finalLine" hidden>
+                    Congratulations. You've officially survived my
+                    birthday website. Please collect your imaginary
+                    trophy. 🏆
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
     <!-- PHOTO LIGHTBOX -->
 
     <div class="lightbox" id="lightbox">
