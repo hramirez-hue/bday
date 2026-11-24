@@ -287,6 +287,7 @@
 /* ---- 3. Wavy section dividers ---- */
 .gallery-section,
 .together-section,
+.jar-section,
 .contract-section,
 .message-section,
 .review-section {
@@ -295,12 +296,14 @@
 
 .gallery-section  { --wave: var(--background); }
 .together-section { --wave: var(--section); }
-.contract-section { --wave: var(--background); }
+.jar-section      { --wave: var(--background); }
+.contract-section { --wave: var(--section); }
 .message-section  { --wave: var(--section); }
 .review-section   { --wave: var(--background); }
 
 .gallery-section::before,
 .together-section::before,
+.jar-section::before,
 .contract-section::before,
 .message-section::before,
 .review-section::before {
@@ -466,6 +469,337 @@ body.toothbrush-theme .review-receipt::after {
     }
 
     .vinyl {
+        animation: none !important;
+    }
+}
+
+
+/* ==========================================
+   FORTUNE COOKIE JAR
+   ========================================== */
+
+.jar-section {
+    padding: 110px 25px;
+    text-align: center;
+    background-color: var(--section);
+    transition: background-color 0.8s ease;
+}
+
+body.toothbrush-theme .jar-section {
+    background-image: radial-gradient(#d9c2ef 1px, transparent 1px);
+    background-size: 22px 22px;
+}
+
+.jar-container {
+    max-width: 650px;
+    margin: auto;
+}
+
+.jar-container > h1 {
+    font-family: "Caveat", "Segoe Script", cursive;
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 14px;
+}
+
+.jar-intro {
+    max-width: 460px;
+    margin: 0 auto 40px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+}
+
+.jar-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+/* The jar is one big button */
+.jar {
+    display: block;
+    width: min(290px, 80vw);
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.jar:hover {
+    transform: translateY(-5px) rotate(-1deg);
+}
+
+.jar.shake {
+    animation: jarShake 0.5s ease;
+}
+
+@keyframes jarShake {
+    0%, 100% { transform: rotate(0deg); }
+    20%      { transform: rotate(-4deg); }
+    40%      { transform: rotate(4deg); }
+    60%      { transform: rotate(-3deg); }
+    80%      { transform: rotate(2deg); }
+}
+
+.jar-lid {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 62%;
+    height: 26px;
+    margin: 0 auto -3px;
+    border-radius: 8px 8px 3px 3px;
+    background: linear-gradient(var(--accent), #c99a34);
+    box-shadow: 0 3px 6px rgba(80, 60, 30, 0.2);
+}
+
+.jar-glass {
+    position: relative;
+    display: block;
+    height: 260px;
+    overflow: hidden;
+    border: 3px solid rgba(165, 138, 100, 0.45);
+    border-radius: 34px 34px 58px 58px;
+    background: linear-gradient(100deg,
+                rgba(255,255,255,0.6),
+                rgba(255,255,255,0.12) 30%,
+                rgba(255,255,255,0.28));
+    box-shadow: inset 8px 0 14px rgba(255,255,255,0.5),
+                inset -6px 0 10px rgba(0,0,0,0.04),
+                0 14px 22px var(--shadow);
+}
+
+.jar-glass::before {
+    content: "";
+    position: absolute;
+    top: 7%;
+    left: 8%;
+    width: 6%;
+    height: 52%;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.55);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Cookies sitting inside the jar (decoration only) */
+.jar-cookie {
+    position: absolute;
+    display: block;
+    width: 58px;
+    height: 38px;
+    transform: rotate(var(--rot, 0deg));
+}
+
+.jar-cookie::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 60% 60% 50% 50% / 75% 75% 45% 45%;
+    background: radial-gradient(ellipse at 35% 30%, #f9dc9a, #e0a94f 70%, #c78a35);
+    box-shadow: inset 0 -4px 6px rgba(120, 70, 20, 0.25),
+                0 2px 4px rgba(60, 40, 10, 0.2);
+}
+
+.jar-cookie::after {
+    content: "";
+    position: absolute;
+    left: 18%;
+    top: 28%;
+    width: 45%;
+    height: 48%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 40% 35%, #d89a43, #b97d2c);
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.18);
+}
+
+.jar-hint {
+    margin: 26px 0 0;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    animation: blink 2s infinite;
+}
+
+
+/* The cookie that comes out of the jar */
+.cookie-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    margin-top: 10px;
+}
+
+.stage-cookie {
+    position: relative;
+    width: 120px;
+    height: 78px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    animation: cookiePop 0.6s cubic-bezier(0.2, 1.2, 0.4, 1) both;
+}
+
+.stage-cookie.open {
+    cursor: default;
+}
+
+.stage-cookie .half {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: radial-gradient(ellipse at 40% 30%, #f9dc9a, #e0a94f 70%, #c78a35);
+    box-shadow: inset 0 -6px 9px rgba(120, 70, 20, 0.25),
+                0 3px 6px rgba(60, 40, 10, 0.2);
+    transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.7s ease;
+}
+
+.stage-cookie .half-l {
+    left: 0;
+    border-radius: 100% 0 0 100% / 50% 0 0 50%;
+    transform-origin: right center;
+}
+
+.stage-cookie .half-r {
+    right: 0;
+    border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+    transform-origin: left center;
+}
+
+/* the fold in the middle */
+.stage-cookie::after {
+    content: "";
+    position: absolute;
+    left: 28%;
+    top: 24%;
+    width: 44%;
+    height: 50%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 40% 35%, #d89a43, #b97d2c);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.18);
+    transition: opacity 0.3s ease;
+}
+
+.stage-cookie:not(.open):hover {
+    transform: scale(1.08) rotate(-3deg);
+}
+
+.stage-cookie.open::after {
+    opacity: 0;
+}
+
+.stage-cookie.open .half-l {
+    transform: translate(-30px, 12px) rotate(-24deg);
+    opacity: 0.6;
+}
+
+.stage-cookie.open .half-r {
+    transform: translate(30px, 12px) rotate(24deg);
+    opacity: 0.6;
+}
+
+.stage-cookie.wiggle {
+    animation: cookieWiggle 0.6s ease;
+}
+
+@keyframes cookiePop {
+    from { opacity: 0; transform: translateY(-110px) scale(0.3) rotate(-40deg); }
+    to   { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
+
+@keyframes cookieWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    20%      { transform: rotate(-12deg) scale(1.1); }
+    40%      { transform: rotate(12deg) scale(1.1); }
+    60%      { transform: rotate(-8deg) scale(1.05); }
+    80%      { transform: rotate(6deg); }
+}
+
+
+/* The little paper slip */
+.fortune-slip {
+    position: relative;
+    max-width: 420px;
+    min-height: 110px;
+    margin: 18px auto 0;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fffdf5;
+    color: #765a37;
+    border: 1px solid #e6d4aa;
+    box-shadow: 0 8px 20px var(--shadow);
+    transform: rotate(-1deg);
+    visibility: hidden;
+    opacity: 0;
+}
+
+.fortune-slip.show {
+    visibility: visible;
+    opacity: 1;
+    animation: slipIn 0.5s ease;
+}
+
+.fortune-slip::before {
+    content: "\273F";
+    position: absolute;
+    top: 7px;
+    left: 11px;
+    font-size: 12px;
+    color: #d6ad55;
+}
+
+.fortune-slip p {
+    font-family: "Caveat", "Segoe Script", cursive;
+    font-size: 27px;
+    line-height: 1.3;
+}
+
+@keyframes slipIn {
+    from { opacity: 0; transform: rotate(-1deg) translateY(14px) scale(0.96); }
+    to   { opacity: 1; transform: rotate(-1deg) translateY(0) scale(1); }
+}
+
+body.toothbrush-theme .fortune-slip {
+    background: #fffaff;
+    color: #614b72;
+    border: 2px dashed #c9a5df;
+    box-shadow: 5px 6px 0 rgba(185, 140, 210, 0.18);
+}
+
+.jar-disclaimer {
+    max-width: 380px;
+    margin: 30px auto 0;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+@media (max-width: 700px) {
+    .jar-section {
+        padding: 85px 20px;
+    }
+
+    .jar-container > h1 {
+        font-size: 42px;
+    }
+
+    .fortune-slip p {
+        font-size: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .jar-hint {
         animation: none !important;
     }
 }
