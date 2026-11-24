@@ -185,9 +185,9 @@ playMusic.addEventListener("click", () => {
 musicAudio.addEventListener("play", () => {
 
     playMusic.textContent = "Ⅱ";
-    playMusic.setAttribute("aria-label", "Pause music");
+    playMusic.setAttribute("aria-label", "Pause");
 
-    playerStatus.textContent = "Now playing. ♫";
+    playerStatus.textContent = "heh";
 
 });
 
@@ -197,11 +197,11 @@ musicAudio.addEventListener("play", () => {
 musicAudio.addEventListener("pause", () => {
 
     playMusic.textContent = "▶";
-    playMusic.setAttribute("aria-label", "Play music");
+    playMusic.setAttribute("aria-label", "Play");
 
     if (musicAudio.currentTime > 0) {
 
-        playerStatus.textContent = "Paused. Take your time.";
+        playerStatus.textContent = "heh";
 
     }
 
