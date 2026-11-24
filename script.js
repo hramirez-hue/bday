@@ -125,11 +125,11 @@ function selectSong(songName) {
 
     if (songName === "yellow") {
 
-        playerStatus.textContent = "A little sunshine for you. ☀";
+        playerStatus.textContent = "Medjo clichet siya pero wtv. ☀";
 
     } else {
 
-        playerStatus.textContent = "A little something different. ✿";
+        playerStatus.textContent = "iykyk >:D. ✿";
 
     }
 
@@ -137,7 +137,7 @@ function selectSong(songName) {
 
         musicAudio.play().catch(() => {
 
-            playerStatus.textContent = "Press play to continue.";
+            playerStatus.textContent = "hehe";
 
         });
 
