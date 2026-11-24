@@ -1,4 +1,4 @@
-
+```javascript
 // ==========================================
 // GET WEBSITE ELEMENTS
 // ==========================================
@@ -69,9 +69,6 @@ const songs = {
 
 let currentSong = "yellow";
 
-
-// SELECT A SONG
-
 function selectSong(songName) {
 
     if (!songs[songName]) {
@@ -81,8 +78,6 @@ function selectSong(songName) {
     const wasPlaying = !musicAudio.paused;
 
     currentSong = songName;
-
-    // Update selected song button
 
     songButtons.forEach(button => {
 
@@ -94,8 +89,6 @@ function selectSong(songName) {
 
     });
 
-    // Change website theme
-
     document.body.classList.remove(
         "yellow-theme",
         "toothbrush-theme"
@@ -103,19 +96,14 @@ function selectSong(songName) {
 
     document.body.classList.add(songs[songName].theme);
 
-    // Change audio source
-
     const newSource = songs[songName].source;
 
     if (!musicAudio.src.endsWith(newSource)) {
 
         musicAudio.src = newSource;
-
         musicAudio.load();
 
     }
-
-    // Update player status
 
     if (songName === "yellow") {
 
@@ -126,8 +114,6 @@ function selectSong(songName) {
         playerStatus.textContent = "A little something different. ✿";
 
     }
-
-    // Continue playing if music was already playing
 
     if (wasPlaying) {
 
@@ -148,9 +134,7 @@ songButtons.forEach(button => {
 
     button.addEventListener("click", () => {
 
-        const selectedSong = button.dataset.song;
-
-        selectSong(selectedSong);
+        selectSong(button.dataset.song);
 
     });
 
@@ -183,7 +167,6 @@ playMusic.addEventListener("click", () => {
 musicAudio.addEventListener("play", () => {
 
     playMusic.textContent = "Ⅱ";
-
     playMusic.setAttribute("aria-label", "Pause music");
 
     playerStatus.textContent = "Now playing. ♫";
@@ -196,7 +179,6 @@ musicAudio.addEventListener("play", () => {
 musicAudio.addEventListener("pause", () => {
 
     playMusic.textContent = "▶";
-
     playMusic.setAttribute("aria-label", "Play music");
 
     if (musicAudio.currentTime > 0) {
@@ -214,8 +196,6 @@ musicAudio.addEventListener("pause", () => {
 
 openingScreen.addEventListener("click", (event) => {
 
-    // Create sunshine animation
-
     const sunshine = document.createElement("div");
 
     sunshine.classList.add("sunshine");
@@ -225,19 +205,13 @@ openingScreen.addEventListener("click", (event) => {
 
     document.body.appendChild(sunshine);
 
-    // Start animation
-
     requestAnimationFrame(() => {
 
         sunshine.classList.add("expand");
 
     });
 
-    // Prevent multiple clicks
-
     openingScreen.style.pointerEvents = "none";
-
-    // Reveal birthday screen and music player
 
     setTimeout(() => {
 
@@ -246,8 +220,6 @@ openingScreen.addEventListener("click", (event) => {
         birthdayScreen.style.display = "flex";
 
         musicPlayer.classList.add("visible");
-
-        // Remove transition element
 
         sunshine.remove();
 
@@ -290,42 +262,146 @@ revealElements.forEach(element => {
 
 
 // ==========================================
-// PHOTO LIGHTBOX
+// PHOTO CAPTION PANELS + LIGHTBOX
 // ==========================================
 
 const galleryPhotos = document.querySelectorAll(".gallery-photo");
 
 
-// OPEN PHOTO
+// CLOSE ALL OPEN CAPTION PANELS
 
-galleryPhotos.forEach(photo => {
+function closeAllPhotoNotes(exceptCard = null) {
 
-    photo.addEventListener("click", () => {
+    document.querySelectorAll(".photo-note-open").forEach(card => {
 
-        lightboxImage.src = photo.src;
+        if (card !== exceptCard) {
 
-        lightboxImage.alt = photo.alt;
-
-        const caption = photo.nextElementSibling;
-
-        if (caption && caption.tagName === "P") {
-
-            lightboxCaption.textContent = caption.textContent;
-
-        } else {
-
-            lightboxCaption.textContent = "";
+            card.classList.remove("photo-note-open");
 
         }
 
-        lightbox.classList.add("active");
+    });
+
+}
+
+
+// CREATE A PHOTO NOTE PANEL
+
+function createPhotoNote(photo) {
+
+    const card = photo.closest(".polaroid, .memory-card");
+
+    if (!card) {
+        return;
+    }
+
+    let panel = card.querySelector(".photo-note-panel");
+
+    // Create the panel if it does not exist yet
+
+    if (!panel) {
+
+        panel = document.createElement("div");
+
+        panel.className = "photo-note-panel";
+
+        const caption = photo.nextElementSibling;
+
+        const message = caption && caption.tagName === "P"
+            ? caption.textContent.trim()
+            : "A little moment worth remembering. ♡";
+
+        const messageElement = document.createElement("p");
+
+        messageElement.className = "photo-note-message";
+        messageElement.textContent = message;
+
+        const viewButton = document.createElement("button");
+
+        viewButton.className = "photo-note-view";
+        viewButton.type = "button";
+        viewButton.textContent = "VIEW PHOTO ↗";
+
+        panel.appendChild(messageElement);
+        panel.appendChild(viewButton);
+
+        card.appendChild(panel);
+
+        // Open the lightbox without toggling the note panel
+
+        viewButton.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+
+            openPhotoLightbox(photo);
+
+        });
+
+    }
+
+    return card;
+
+}
+
+
+// OPEN OR CLOSE A PHOTO NOTE
+
+galleryPhotos.forEach(photo => {
+
+    photo.addEventListener("click", (event) => {
+
+        event.stopPropagation();
+
+        const card = createPhotoNote(photo);
+
+        if (!card) {
+            return;
+        }
+
+        const isAlreadyOpen = card.classList.contains("photo-note-open");
+
+        closeAllPhotoNotes(card);
+
+        if (isAlreadyOpen) {
+
+            card.classList.remove("photo-note-open");
+
+        } else {
+
+            card.classList.add("photo-note-open");
+
+        }
 
     });
 
 });
 
 
-// CLOSE PHOTO
+// OPEN PHOTO LIGHTBOX
+
+function openPhotoLightbox(photo) {
+
+    lightboxImage.src = photo.src;
+    lightboxImage.alt = photo.alt;
+
+    const caption = photo.nextElementSibling;
+
+    if (caption && caption.tagName === "P") {
+
+        lightboxCaption.textContent = caption.textContent;
+
+    } else {
+
+        lightboxCaption.textContent = "";
+
+    }
+
+    lightbox.classList.add("active");
+
+}
+
+
+// CLOSE PHOTO LIGHTBOX
 
 function hideLightbox() {
 
@@ -360,6 +436,8 @@ document.addEventListener("keydown", (event) => {
 
         hideLightbox();
 
+        closeAllPhotoNotes();
+
     }
 
 });
@@ -373,8 +451,6 @@ signContract.addEventListener("click", () => {
 
     const name = signerName.value.trim();
 
-    // Check if name was entered
-
     if (name === "") {
 
         contractError.textContent = "Please enter your name first.";
@@ -385,8 +461,6 @@ signContract.addEventListener("click", () => {
 
     }
 
-    // Check if agreement was accepted
-
     if (!agreeContract.checked) {
 
         contractError.textContent =
@@ -396,15 +470,9 @@ signContract.addEventListener("click", () => {
 
     }
 
-    // Clear error message
-
     contractError.textContent = "";
 
-    // Display signed name
-
     certificateName.textContent = name;
-
-    // Update optional clause status
 
     if (moreOption.checked) {
 
@@ -418,20 +486,13 @@ signContract.addEventListener("click", () => {
 
     }
 
-    // Hide signing form
-
     contractSigning.style.display = "none";
 
-    // Reveal certificate
-
     contractCertificate.classList.add("show");
-
-    // Scroll to certificate
 
     contractCertificate.scrollIntoView({
 
         behavior: "smooth",
-
         block: "center"
 
     });
@@ -443,11 +504,7 @@ signContract.addEventListener("click", () => {
 // INTERACTIVE ENVELOPE
 // ==========================================
 
-// OPEN THE ENVELOPE
-
 openLetter.addEventListener("click", () => {
-
-    // Prevent reopening
 
     if (openLetter.classList.contains("is-open")) {
 
@@ -455,30 +512,19 @@ openLetter.addEventListener("click", () => {
 
     }
 
-    // Play envelope opening animation
-
     openLetter.classList.add("is-open");
-
-    // Update accessibility state
 
     openLetter.setAttribute("aria-expanded", "true");
 
-    // Update envelope hint
-
     envelopeHint.textContent = "YOUR NOTE IS OPEN ♡";
 
-    // Reveal the letter
-
     messageLetter.hidden = false;
-
-    // Scroll to the revealed letter
 
     setTimeout(() => {
 
         messageLetter.scrollIntoView({
 
             behavior: "smooth",
-
             block: "center"
 
         });
@@ -492,35 +538,23 @@ openLetter.addEventListener("click", () => {
 // FINAL LITTLE MESSAGE
 // ==========================================
 
-// CLICK THE FEELINGS BUTTON
-
 closeFeelings.addEventListener("click", () => {
 
-    // Reveal the final message
-
     finalLine.hidden = false;
-
-    // Change button text
 
     closeFeelings.textContent =
         "EMOTIONAL DAMAGE: MINIMAL ✓";
 
-    // Disable button after clicking
-
     closeFeelings.disabled = true;
 
     closeFeelings.style.cursor = "default";
-
     closeFeelings.style.opacity = "0.7";
-
-    // Scroll to final message
 
     setTimeout(() => {
 
         finalLine.scrollIntoView({
 
             behavior: "smooth",
-
             block: "center"
 
         });
@@ -534,7 +568,5 @@ closeFeelings.addEventListener("click", () => {
 // INITIAL WEBSITE SETTINGS
 // ==========================================
 
-// Select the default song and theme
-
 selectSong("yellow");
-
+```
