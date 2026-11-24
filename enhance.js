@@ -5,6 +5,12 @@
 (function () {
     "use strict";
 
+    // ---- SETTINGS ----------------------------------
+    // true  = every photo starts covered and must be clicked to reveal
+    // false = photos start visible (original behavior)
+    const COVER_PHOTOS = true;
+    // ------------------------------------------------
+
     const byId = (id) => document.getElementById(id);
     const isActivateKey = (e) => e.key === "Enter" || e.key === " ";
 
@@ -27,6 +33,32 @@
             }
         });
     });
+
+
+    // ------------------------------------------
+    // 1b. COVERED PHOTOS: click once to reveal,
+    //     click again to see the note + caption
+    // ------------------------------------------
+    if (COVER_PHOTOS) {
+        document.querySelectorAll(".polaroid, .memory-card").forEach((card) => {
+            const img = card.querySelector(".gallery-photo");
+            if (!img) return;
+
+            card.classList.add("photo-covered");
+            img.setAttribute("aria-label", "Reveal this photo");
+
+            // Capture phase: runs BEFORE script.js's click handler,
+            // so the first click only reveals and doesn't open the note.
+            card.addEventListener("click", (e) => {
+                if (!card.classList.contains("photo-covered")) return;
+                if (e.target !== img) return;
+
+                e.stopPropagation();
+                card.classList.remove("photo-covered");
+                img.setAttribute("aria-label", "Show the note for this photo");
+            }, true);
+        });
+    }
 
 
     // ------------------------------------------
