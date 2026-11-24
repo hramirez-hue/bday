@@ -338,17 +338,19 @@ body.toothbrush-theme .play-button {
     align-items: center;
     flex-wrap: wrap;
     gap: 35px;
-    max-width: 1050px;
+    max-width: 1100px;
     margin: auto;
 }
 
 .polaroid {
+    position: relative;
     width: 230px;
     padding: 12px 12px 25px;
     background-color: var(--card);
     box-shadow: 0 8px 20px var(--shadow);
     transform: rotate(-2deg);
     transition: transform 0.3s ease, background 0.6s ease;
+    z-index: 1;
 }
 
 .polaroid:nth-child(3) {
@@ -393,12 +395,14 @@ body.toothbrush-theme .play-button {
 }
 
 .memory-card {
+    position: relative;
     grid-column: span 2;
     padding: 10px 10px 20px;
     background-color: var(--card);
     box-shadow: 0 8px 20px var(--shadow);
     transform: rotate(-1deg);
     transition: transform 0.3s ease, background 0.6s ease;
+    z-index: 1;
 }
 
 .memory-card:nth-child(2),
@@ -429,6 +433,97 @@ body.toothbrush-theme .play-button {
 }
 
 
+/* =========================================
+   INTERACTIVE PHOTO NOTES
+========================================= */
+
+.polaroid,
+.memory-card {
+    overflow: visible;
+}
+
+.polaroid,
+.memory-card {
+    isolation: isolate;
+}
+
+.polaroid img,
+.memory-card img {
+    transition: transform 0.5s ease;
+}
+
+.photo-note {
+    position: absolute;
+    top: 50%;
+    left: calc(100% - 5px);
+    width: 190px;
+    min-height: 125px;
+    padding: 20px 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background: #fff8df;
+    color: #765a37;
+    border: 1px solid #e6d4aa;
+    box-shadow: 5px 7px 15px rgba(100, 75, 40, 0.12);
+
+    font-size: 13px;
+    line-height: 1.7;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transform: translate(-15px, -50%) rotate(4deg) scale(0.9);
+    transform-origin: left center;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+        visibility 0.4s ease;
+
+    z-index: 10;
+}
+
+.photo-note::before {
+    content: "✿";
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    font-size: 12px;
+    color: #d6ad55;
+}
+
+.photo-note::after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    width: 25px;
+    height: 1px;
+    background: #d8bd83;
+}
+
+.polaroid.note-open,
+.memory-card.note-open {
+    z-index: 20;
+}
+
+.polaroid.note-open img,
+.memory-card.note-open img {
+    transform: translateX(-7px);
+}
+
+.polaroid.note-open .photo-note,
+.memory-card.note-open .photo-note {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, -50%) rotate(3deg) scale(1);
+}
+
+
 /* TOOTHBRUSH SCRAPBOOK DETAILS */
 
 body.toothbrush-theme .gallery-section,
@@ -454,6 +549,21 @@ body.toothbrush-theme .polaroid:nth-child(odd) {
 
 body.toothbrush-theme .memory-card:nth-child(even) {
     transform: rotate(-3deg);
+}
+
+body.toothbrush-theme .photo-note {
+    background: #fff0fa;
+    color: #614b72;
+    border: 2px dashed #c79bdf;
+    box-shadow: 5px 7px 0 rgba(185, 140, 210, 0.18);
+}
+
+body.toothbrush-theme .photo-note::before {
+    color: #c78cdd;
+}
+
+body.toothbrush-theme .photo-note::after {
+    background: #d9b5e8;
 }
 
 
@@ -655,6 +765,31 @@ body.toothbrush-theme .memory-card:nth-child(even) {
         top: 12px;
         right: 12px;
         padding: 13px;
+    }
+
+    /* NOTES MOVE BELOW PHOTOS ON SMALL SCREENS */
+
+    .photo-note {
+        top: calc(100% + 12px);
+        left: 50%;
+        width: min(220px, 75vw);
+        min-height: 95px;
+        transform: translate(-50%, -10px) rotate(2deg) scale(0.95);
+    }
+
+    .polaroid.note-open .photo-note,
+    .memory-card.note-open .photo-note {
+        transform: translate(-50%, 0) rotate(2deg) scale(1);
+    }
+
+    .polaroid.note-open img,
+    .memory-card.note-open img {
+        transform: none;
+    }
+
+    .polaroid.note-open,
+    .memory-card.note-open {
+        margin-bottom: 115px;
     }
 
 }
@@ -908,9 +1043,7 @@ body.toothbrush-theme .memory-card:nth-child(even) {
 }
 
 
-/* =========================================
-   APPROVED CERTIFICATE
-========================================= */
+/* APPROVED CERTIFICATE */
 
 .contract-certificate {
     display: none;
@@ -995,9 +1128,7 @@ body.toothbrush-theme .memory-card:nth-child(even) {
 }
 
 
-/* =========================================
-   TOOTHBRUSH THEME: CONTRACT
-========================================= */
+/* TOOTHBRUSH THEME: CONTRACT */
 
 body.toothbrush-theme .contract-section {
     background-color: #eee7ff;
@@ -1080,9 +1211,7 @@ body.toothbrush-theme .certificate-status {
 }
 
 
-/* =========================================
-   CONTRACT ANIMATION
-========================================= */
+/* CONTRACT ANIMATION */
 
 @keyframes certificateReveal {
     from {
@@ -1097,9 +1226,7 @@ body.toothbrush-theme .certificate-status {
 }
 
 
-/* =========================================
-   CONTRACT: MOBILE RESPONSIVENESS
-========================================= */
+/* CONTRACT: MOBILE RESPONSIVENESS */
 
 @media (max-width: 700px) {
 
@@ -1143,9 +1270,7 @@ body.toothbrush-theme .certificate-status {
 }
 
 
-/* =========================================
-   INTERACTIVE LITTLE MESSAGE
-========================================= */
+/* INTERACTIVE LITTLE MESSAGE */
 
 .message-section {
     min-height: 100vh;
