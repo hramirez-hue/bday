@@ -78,6 +78,67 @@
 }
 
 
+/* Covered photos (click to reveal) */
+.polaroid::after,
+.memory-card::after {
+    content: "\273F\A TAP TO REVEAL";
+    white-space: pre-line;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    height: 230px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--section);
+    color: var(--muted);
+    border: 1px dashed var(--accent);
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    line-height: 2.4;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.memory-card::after {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 220px;
+}
+
+.polaroid.photo-covered::after,
+.memory-card.photo-covered::after {
+    opacity: 1;
+}
+
+.polaroid.photo-covered:hover::after,
+.memory-card.photo-covered:hover::after {
+    color: var(--text);
+}
+
+/* Hide the caption under a photo until it's revealed */
+.polaroid > p,
+.memory-card > p {
+    transition: opacity 0.6s ease;
+}
+
+.photo-covered > p {
+    opacity: 0;
+}
+
+@media (max-width: 700px) {
+    .memory-card::after {
+        height: 170px;
+    }
+}
+
+
 /* Copy button on the review receipt */
 .receipt-copy {
     margin-bottom: 12px;
