@@ -1,0 +1,148 @@
+/* ==========================================
+   enhance.css - load AFTER style.css
+   ========================================== */
+
+/* Visible keyboard focus */
+:focus-visible {
+    outline: 3px solid var(--accent, #e3b951);
+    outline-offset: 3px;
+}
+
+.opening-screen:focus-visible {
+    outline-offset: -10px;
+}
+
+.opening-screen:focus {
+    outline: none;
+}
+
+.opening-screen:focus-visible {
+    outline: 3px solid var(--accent, #e3b951);
+}
+
+
+/* Music player minimize button */
+.player-toggle {
+    margin-left: auto;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #eadbbd;
+    border-radius: 50%;
+    background: transparent;
+    color: #8b7659;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.player-toggle:hover {
+    transform: scale(1.1);
+}
+
+.music-player.minimized {
+    width: auto;
+}
+
+.music-player.minimized .music-message,
+.music-player.minimized .song-options,
+.music-player.minimized .player-status {
+    display: none;
+}
+
+.music-player.minimized .music-player-heading {
+    margin-bottom: 8px;
+}
+
+.music-player.minimized .player-controls {
+    justify-content: flex-end;
+}
+
+
+/* Photo notes: open to the left when the right side would be cut off */
+.polaroid.note-left .photo-note-panel,
+.memory-card.note-left .photo-note-panel {
+    left: auto;
+    right: calc(100% - 5px);
+    transform: translate(15px, -50%) rotate(-4deg) scale(0.9);
+}
+
+.polaroid.note-left.photo-note-open .photo-note-panel,
+.memory-card.note-left.photo-note-open .photo-note-panel {
+    transform: translate(0, -50%) rotate(-3deg) scale(1);
+}
+
+.polaroid.note-left.photo-note-open img,
+.memory-card.note-left.photo-note-open img {
+    transform: translateX(7px);
+}
+
+
+/* Copy button on the review receipt */
+.receipt-copy {
+    margin-bottom: 12px;
+}
+
+
+/* Phones: real viewport height + more readable tiny text */
+@supports (height: 100svh) {
+    .opening-screen,
+    .birthday-screen,
+    .message-section {
+        min-height: 100svh;
+    }
+}
+
+@media (max-width: 700px) {
+    .small-heading {
+        font-size: 12px;
+        letter-spacing: 3px;
+    }
+
+    .review-hint,
+    .optional-note,
+    .rating-description,
+    .review-disclaimer,
+    .review-header p,
+    .contract-subtitle {
+        font-size: 12px;
+    }
+
+    .continue-text,
+    .scroll-prompt,
+    .envelope-hint {
+        font-size: 11px;
+    }
+
+    .rating-star {
+        padding: 4px 6px;
+    }
+}
+
+
+/* Respect "reduce motion" */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .continue-text,
+    .scroll-prompt,
+    .envelope-hint,
+    .flower {
+        animation: none !important;
+    }
+
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
