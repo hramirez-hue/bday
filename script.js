@@ -571,7 +571,7 @@ openLetter.addEventListener("click", () => {
 closeFeelings.addEventListener("click", () => {
 
     closeFeelings.textContent =
-        "EMOTIONAL DAMAGE: MINIMAL ✓";
+        "ok proceed";
 
     closeFeelings.disabled = true;
 
