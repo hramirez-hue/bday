@@ -9,6 +9,11 @@
     // true  = every photo starts covered and must be clicked to reveal
     // false = photos start visible (original behavior)
     const COVER_PHOTOS = true;
+
+    // true = drifting petals on the opening + birthday screens
+    const PETALS = true;
+    // true = confetti when she enters the site and when she signs the contract
+    const CONFETTI = true;
     // ------------------------------------------------
 
     const byId = (id) => document.getElementById(id);
@@ -71,7 +76,12 @@
     opening.setAttribute("role", "button");
     opening.setAttribute("aria-label", "Click to continue");
 
-    opening.addEventListener("click", () => { opened = true; });
+    opening.addEventListener("click", () => {
+        if (!opened && typeof launchWelcomeConfetti === "function") {
+            launchWelcomeConfetti();
+        }
+        opened = true;
+    });
 
     opening.addEventListener("keydown", (e) => {
         if (opened || !isActivateKey(e)) return;
@@ -203,6 +213,12 @@
             byId("futureStatus").textContent =
                 "FUTURE POSSIBILITIES: NOT SELECTED (no pressure \u2661)";
         }
+
+        if (certificateShown && CONFETTI) {
+            setTimeout(() => {
+                confettiBurst(window.innerWidth / 2, window.innerHeight * 0.65, 110);
+            }, 350);
+        }
     });
 
 
@@ -267,5 +283,115 @@
             ? "COPIED \u2713 paste it in our chat"
             : "COULDN'T COPY - screenshot instead";
     });
+
+    // ------------------------------------------
+    // 10. DRIFTING PETALS (opening + birthday screens)
+    // ------------------------------------------
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (PETALS && !reduceMotion) {
+        const shapes = ["\u273F", "\u2740", "\u2727", "\u2661"];
+
+        [byId("openingScreen"), byId("birthdayScreen")].forEach((host) => {
+            if (!host) return;
+
+            const layer = document.createElement("div");
+            layer.className = "petal-layer";
+            layer.setAttribute("aria-hidden", "true");
+
+            for (let i = 0; i < 16; i++) {
+                const petal = document.createElement("span");
+                petal.className = "petal";
+                petal.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+
+                petal.style.left = (Math.random() * 100) + "%";
+                petal.style.fontSize = (13 + Math.random() * 16) + "px";
+                petal.style.animationDuration = (10 + Math.random() * 10) + "s";
+                petal.style.animationDelay = "-" + (Math.random() * 18) + "s";
+                petal.style.setProperty("--sway", (Math.random() * 90 - 45) + "px");
+
+                layer.appendChild(petal);
+            }
+
+            host.insertBefore(layer, host.firstChild);
+        });
+    }
+
+
+    // ------------------------------------------
+    // 11. CONFETTI
+    // ------------------------------------------
+    const confettiColors = ["#e3b951", "#f4d58e", "#ed91b8", "#d49be9", "#fff3cf", "#a879c5", "#f2a48a"];
+    let confettiLayer = null;
+
+    function confettiBurst(x, y, count) {
+        if (!CONFETTI || reduceMotion) return;
+
+        if (!confettiLayer) {
+            confettiLayer = document.createElement("div");
+            confettiLayer.className = "confetti-layer";
+            confettiLayer.setAttribute("aria-hidden", "true");
+            document.body.appendChild(confettiLayer);
+        }
+
+        for (let i = 0; i < count; i++) {
+            const piece = document.createElement("i");
+            const w = 6 + Math.random() * 6;
+            const h = w * (1.2 + Math.random());
+
+            piece.style.cssText =
+                "position:absolute;left:" + x + "px;top:" + y + "px;" +
+                "width:" + w + "px;height:" + h + "px;" +
+                "background:" + confettiColors[Math.floor(Math.random() * confettiColors.length)] + ";" +
+                "border-radius:" + (Math.random() < 0.3 ? "50%" : "1px") + ";";
+
+            confettiLayer.appendChild(piece);
+
+            const angle = (-90 + (Math.random() - 0.5) * 140) * Math.PI / 180;
+            const speed = 180 + Math.random() * 320;
+            const dx = Math.cos(angle) * speed;
+            const up = Math.sin(angle) * speed;
+            const fall = 380 + Math.random() * 320;
+            const spin = (Math.random() - 0.5) * 900;
+            const duration = 1800 + Math.random() * 1400;
+
+            const anim = piece.animate([
+                { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+                { transform: "translate(" + (dx * 0.7) + "px," + up + "px) rotate(" + (spin * 0.4) + "deg)", opacity: 1, offset: 0.35 },
+                { transform: "translate(" + dx + "px," + (up + fall) + "px) rotate(" + spin + "deg)", opacity: 0 }
+            ], { duration: duration, easing: "cubic-bezier(0.25, 0.6, 0.4, 1)", fill: "forwards" });
+
+            anim.onfinish = () => piece.remove();
+        }
+    }
+
+    // Called by the opening-screen click handler (section 2) after the sunshine transition
+    function launchWelcomeConfetti() {
+        setTimeout(() => {
+            confettiBurst(window.innerWidth * 0.25, window.innerHeight * 0.8, 70);
+            confettiBurst(window.innerWidth * 0.75, window.innerHeight * 0.8, 70);
+        }, 1100);
+    }
+    window.launchWelcomeConfetti = launchWelcomeConfetti;
+
+
+    // ------------------------------------------
+    // 12. SPINNING VINYL in the music player
+    // ------------------------------------------
+    const musicAudioEl = byId("musicAudio");
+    const vinylHost = heading.querySelector("span:first-child");
+
+    if (vinylHost) {
+        vinylHost.textContent = "";
+        const vinyl = document.createElement("span");
+        vinyl.className = "vinyl";
+        vinyl.setAttribute("aria-hidden", "true");
+        vinylHost.appendChild(vinyl);
+    }
+
+    ["play", "playing"].forEach((evt) =>
+        musicAudioEl.addEventListener(evt, () => player.classList.add("is-playing")));
+    ["pause", "ended"].forEach((evt) =>
+        musicAudioEl.addEventListener(evt, () => player.classList.remove("is-playing")));
 
 })();
