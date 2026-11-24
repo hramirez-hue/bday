@@ -1,3 +1,5 @@
+
+// ==========================================
 // GET WEBSITE ELEMENTS
 // ==========================================
 
@@ -44,6 +46,25 @@ const messageLetter = document.getElementById("messageLetter");
 const envelopeHint = document.getElementById("envelopeHint");
 
 const closeFeelings = document.getElementById("closeFeelings");
+
+// Review elements
+
+const starButtons = document.querySelectorAll(".rating-star");
+const ratingDescription = document.getElementById("ratingDescription");
+
+const reviewFeedback = document.getElementById("reviewFeedback");
+const reviewError = document.getElementById("reviewError");
+const submitReview = document.getElementById("submitReview");
+
+const reviewPaper = document.querySelector(".review-paper");
+const reviewReceipt = document.getElementById("reviewReceipt");
+
+const receiptRating = document.getElementById("receiptRating");
+const receiptFavorite = document.getElementById("receiptFavorite");
+const receiptAgain = document.getElementById("receiptAgain");
+const receiptFeedback = document.getElementById("receiptFeedback");
+
+const finishReview = document.getElementById("finishReview");
 const finalLine = document.getElementById("finalLine");
 
 
@@ -283,98 +304,6 @@ function closeAllPhotoNotes(exceptCard = null) {
 }
 
 
-// CREATE A PHOTO NOTE PANEL
-
-function createPhotoNote(photo) {
-
-    const card = photo.closest(".polaroid, .memory-card");
-
-    if (!card) {
-        return;
-    }
-
-    let panel = card.querySelector(".photo-note-panel");
-
-    // Create the panel if it does not exist yet
-
-    if (!panel) {
-
-        panel = document.createElement("div");
-
-        panel.className = "photo-note-panel";
-
-        const caption = photo.nextElementSibling;
-
-        const message = caption && caption.tagName === "P"
-            ? caption.textContent.trim()
-            : "A little moment worth remembering. ♡";
-
-        const messageElement = document.createElement("p");
-
-        messageElement.className = "photo-note-message";
-        messageElement.textContent = message;
-
-        const viewButton = document.createElement("button");
-
-        viewButton.className = "photo-note-view";
-        viewButton.type = "button";
-        viewButton.textContent = "VIEW PHOTO ↗";
-
-        panel.appendChild(messageElement);
-        panel.appendChild(viewButton);
-
-        card.appendChild(panel);
-
-        // Open the lightbox without toggling the note panel
-
-        viewButton.addEventListener("click", (event) => {
-
-            event.stopPropagation();
-
-            openPhotoLightbox(photo);
-
-        });
-
-    }
-
-    return card;
-
-}
-
-
-// OPEN OR CLOSE A PHOTO NOTE
-
-galleryPhotos.forEach(photo => {
-
-    photo.addEventListener("click", (event) => {
-
-        event.stopPropagation();
-
-        const card = createPhotoNote(photo);
-
-        if (!card) {
-            return;
-        }
-
-        const isAlreadyOpen = card.classList.contains("photo-note-open");
-
-        closeAllPhotoNotes(card);
-
-        if (isAlreadyOpen) {
-
-            card.classList.remove("photo-note-open");
-
-        } else {
-
-            card.classList.add("photo-note-open");
-
-        }
-
-    });
-
-});
-
-
 // OPEN PHOTO LIGHTBOX
 
 function openPhotoLightbox(photo) {
@@ -397,6 +326,119 @@ function openPhotoLightbox(photo) {
     lightbox.classList.add("active");
 
 }
+
+
+// CREATE A PHOTO NOTE PANEL
+
+function createPhotoNote(photo) {
+
+    const card = photo.closest(".polaroid, .memory-card");
+
+    if (!card) {
+        return null;
+    }
+
+    let panel = card.querySelector(".photo-note");
+
+    // Create the panel only once
+
+    if (!panel) {
+
+        panel = document.createElement("div");
+
+        // IMPORTANT: This matches the CSS class name
+
+        panel.className = "photo-note";
+
+        // Use the message stored in the image's data-note
+
+        const message = photo.dataset.note ||
+            "A little moment worth remembering. ♡";
+
+        const messageElement = document.createElement("p");
+
+        messageElement.className = "photo-note-message";
+        messageElement.textContent = message;
+
+        const viewButton = document.createElement("button");
+
+        viewButton.className = "photo-note-view";
+        viewButton.type = "button";
+        viewButton.textContent = "VIEW PHOTO ↗";
+
+        // Add the message and button to the panel
+
+        panel.appendChild(messageElement);
+        panel.appendChild(viewButton);
+
+        card.appendChild(panel);
+
+        // Give the panel a neat little layout
+
+        panel.style.flexDirection = "column";
+        panel.style.gap = "10px";
+
+        messageElement.style.margin = "0";
+
+        viewButton.style.padding = "7px 10px";
+        viewButton.style.border = "1px solid currentColor";
+        viewButton.style.borderRadius = "20px";
+        viewButton.style.background = "transparent";
+        viewButton.style.color = "inherit";
+        viewButton.style.fontFamily = "Arial, sans-serif";
+        viewButton.style.fontSize = "9px";
+        viewButton.style.letterSpacing = "1px";
+        viewButton.style.cursor = "pointer";
+
+        // Open the enlarged photo when this button is clicked
+
+        viewButton.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+
+            openPhotoLightbox(photo);
+
+        });
+
+    }
+
+    return card;
+
+}
+
+
+// CLICK PHOTO TO OPEN OR CLOSE ITS NOTE
+
+galleryPhotos.forEach(photo => {
+
+    photo.addEventListener("click", (event) => {
+
+        event.stopPropagation();
+
+        const card = createPhotoNote(photo);
+
+        if (!card) {
+            return;
+        }
+
+        const isAlreadyOpen =
+            card.classList.contains("photo-note-open");
+
+        closeAllPhotoNotes(card);
+
+        if (isAlreadyOpen) {
+
+            card.classList.remove("photo-note-open");
+
+        } else {
+
+            card.classList.add("photo-note-open");
+
+        }
+
+    });
+
+});
 
 
 // CLOSE PHOTO LIGHTBOX
@@ -451,7 +493,8 @@ signContract.addEventListener("click", () => {
 
     if (name === "") {
 
-        contractError.textContent = "Please enter your name first.";
+        contractError.textContent =
+            "Please enter your name first.";
 
         signerName.focus();
 
@@ -533,31 +576,165 @@ openLetter.addEventListener("click", () => {
 
 
 // ==========================================
-// FINAL LITTLE MESSAGE
+// MOVE FROM LETTER TO REVIEW
 // ==========================================
 
 closeFeelings.addEventListener("click", () => {
 
-    finalLine.hidden = false;
+    document.getElementById("reviewSection").scrollIntoView({
 
-    closeFeelings.textContent =
-        "EMOTIONAL DAMAGE: MINIMAL ✓";
+        behavior: "smooth",
+        block: "start"
 
-    closeFeelings.disabled = true;
+    });
 
-    closeFeelings.style.cursor = "default";
-    closeFeelings.style.opacity = "0.7";
+});
 
-    setTimeout(() => {
 
-        finalLine.scrollIntoView({
+// ==========================================
+// EXPERIENCE REVIEW: STAR RATING
+// ==========================================
 
-            behavior: "smooth",
-            block: "center"
+let selectedRating = 0;
+
+const ratingMessages = {
+
+    1: "We'll pretend we didn't see that. 😭",
+    2: "Room for improvement. Management is listening.",
+    3: "Not bad! We'll take it.",
+    4: "A pretty good experience, apparently. ♡",
+    5: "PERFECTION. Management is emotional. 🏆"
+
+};
+
+
+// HANDLE STAR CLICKS
+
+starButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        selectedRating = Number(button.dataset.rating);
+
+        starButtons.forEach(star => {
+
+            const starRating = Number(star.dataset.rating);
+
+            if (starRating <= selectedRating) {
+
+                star.style.color = "#e3b951";
+                star.style.transform = "scale(1.15)";
+
+            } else {
+
+                star.style.color = "";
+                star.style.transform = "scale(1)";
+
+            }
 
         });
 
-    }, 200);
+        ratingDescription.textContent =
+            ratingMessages[selectedRating];
+
+        reviewError.textContent = "";
+
+    });
+
+});
+
+
+// ==========================================
+// EXPERIENCE REVIEW: SUBMIT
+// ==========================================
+
+submitReview.addEventListener("click", () => {
+
+    // Rating is the only required answer
+
+    if (selectedRating === 0) {
+
+        reviewError.textContent =
+            "You forgot to give us a rating! Management is waiting. :(";
+
+        return;
+
+    }
+
+    // Get the selected favorite moment
+
+    const favoriteChoice =
+        document.querySelector('input[name="favoriteMoment"]:checked');
+
+    // Get the selected answer for doing it again
+
+    const againChoice =
+        document.querySelector('input[name="again"]:checked');
+
+    // Get written feedback
+
+    const feedback = reviewFeedback.value.trim();
+
+    // Fill in the receipt
+
+    receiptRating.textContent =
+        `${selectedRating} / 5 stars`;
+
+    receiptFavorite.textContent =
+        favoriteChoice
+            ? favoriteChoice.value
+            : "No answer provided.";
+
+    receiptAgain.textContent =
+        againChoice
+            ? againChoice.value
+            : "No answer provided.";
+
+    receiptFeedback.textContent =
+        feedback !== ""
+            ? feedback
+            : "No additional comments.";
+
+    // Hide the form and show the receipt
+
+    reviewError.textContent = "";
+
+    reviewPaper.style.display = "none";
+
+    reviewReceipt.hidden = false;
+
+    reviewReceipt.scrollIntoView({
+
+        behavior: "smooth",
+        block: "center"
+
+    });
+
+});
+
+
+// ==========================================
+// FINAL GOODBYE
+// ==========================================
+
+finishReview.addEventListener("click", () => {
+
+    finalLine.hidden = false;
+
+    finishReview.textContent =
+        "EXPERIENCE COMPLETED ✓";
+
+    finishReview.disabled = true;
+
+    finishReview.style.cursor = "default";
+    finishReview.style.opacity = "0.7";
+
+    finalLine.scrollIntoView({
+
+        behavior: "smooth",
+        block: "center"
+
+    });
 
 });
 
@@ -567,4 +744,3 @@ closeFeelings.addEventListener("click", () => {
 // ==========================================
 
 selectSong("yellow");
-```
