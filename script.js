@@ -592,15 +592,15 @@ let selectedRating = 0;
 
 const ratingMessages = {
 
-    1: "We'll take that as constructive criticism. 😭",
+    1: "awts gege",
 
-    2: "Room for improvement, apparently.",
+    2: "para away para away para away para away para away para away ",
 
-    3: "Not bad. We'll take it.",
+    3: "san ako nagkulang sent :C",
 
-    4: "Pretty good! Management approves.",
+    4: "e-5 dkn sipog pa sa kw",
 
-    5: "A five-star experience. Management is emotional. 🥹"
+    5: "yieeeeee crush mo nasab ako"
 
 };
 
@@ -656,7 +656,7 @@ submitReview.addEventListener("click", () => {
     if (selectedRating === 0) {
 
         reviewError.textContent =
-            "Management requires an overall rating first. ⭐";
+            "pag rate sa";
 
         return;
 
@@ -665,7 +665,7 @@ submitReview.addEventListener("click", () => {
     if (!favoriteMoment) {
 
         reviewError.textContent =
-            "Please select your favorite part of the experience.";
+            "pili lang lods";
 
         return;
 
@@ -693,7 +693,7 @@ submitReview.addEventListener("click", () => {
 
     receiptFeedback.textContent =
         reviewFeedback.value.trim() ||
-        "No additional comments. Management will assume we're perfect. :)";
+        "No comment (siguro speechless toh haha";
 
     // Display receipt
 
@@ -722,7 +722,7 @@ finishReview.addEventListener("click", () => {
     finalLine.hidden = false;
 
     finishReview.textContent =
-        "EXPERIENCE COMPLETED ✓";
+        "EXPERIENCE COMPLETED ";
 
     finishReview.disabled = true;
 
