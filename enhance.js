@@ -16,6 +16,26 @@
     const CONFETTI = true;
     // ------------------------------------------------
 
+    // ---- THE FORTUNE COOKIE JAR --------------------
+    // EDIT THESE! One message per cookie. Add as many as you like.
+    // Add or remove lines freely. Keep the quotes and the commas.
+    // These are only drafts, so replace them with your own words.
+    const FORTUNES = [
+        "imo ilong. oo, ilong ulit. permi ko gina-kyut2 ahaha",
+        "ma-chika ka gyud, miss ko na mga chika mo",
+        "ipad kid ka pero ikaw pinaka-kyut na ipad kid",
+        "nerd ka pero idol ta imo pagka comsci",
+        "murag monkey ka minsan pero my little monkey ka lang",
+        "maldita ka pero mao na gusto ko sayo",
+        "makalingaw ka kuyog, kahit wa tay gina buhat",
+        "ikaw ang una ko ma-think pag naay funny",
+        "goated ka na friend, wa ko pa ka-meet na mas goated",
+        "imo laugh, dili ko ma-explain pero ok na ko",
+        "gina tolerate mo ako ug mga questionable decisions ko, salamat",
+        "kahit dili ta mag-chat permi, ikaw gihapon ni"
+    ];
+    // ------------------------------------------------
+
     const byId = (id) => document.getElementById(id);
     const isActivateKey = (e) => e.key === "Enter" || e.key === " ";
 
@@ -199,7 +219,7 @@
     }, { threshold: 0 });
 
     document
-        .querySelectorAll(".contract-container, .message-container, .review-container")
+        .querySelectorAll(".contract-container, .message-container, .review-container, .jar-container")
         .forEach((el) => tallObserver.observe(el));
 
 
@@ -393,5 +413,88 @@
         musicAudioEl.addEventListener(evt, () => player.classList.add("is-playing")));
     ["pause", "ended"].forEach((evt) =>
         musicAudioEl.addEventListener(evt, () => player.classList.remove("is-playing")));
+
+    // ------------------------------------------
+    // 13. FORTUNE COOKIE JAR
+    //     click the jar -> a cookie pops out
+    //     click the cookie -> it cracks open and shows a message
+    // ------------------------------------------
+    const jarBtn = byId("jar");
+
+    if (jarBtn) {
+        const hint = byId("jarHint");
+        const stage = byId("cookieStage");
+        const slip = byId("fortuneSlip");
+        const slipText = byId("fortuneText");
+
+        let bag = [];
+        let lastMessage = "";
+        let currentCookie = null;
+
+        // Every message shows once before any message repeats
+        function nextMessage() {
+            if (bag.length === 0) {
+                bag = FORTUNES.slice();
+                for (let i = bag.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [bag[i], bag[j]] = [bag[j], bag[i]];
+                }
+                // don't start a new round with the message she just saw
+                if (bag.length > 1 && bag[bag.length - 1] === lastMessage) {
+                    bag.unshift(bag.pop());
+                }
+            }
+            lastMessage = bag.pop();
+            return lastMessage;
+        }
+
+        function pulse(el, cls, ms) {
+            el.classList.remove(cls);
+            void el.offsetWidth;
+            el.classList.add(cls);
+            setTimeout(() => el.classList.remove(cls), ms);
+        }
+
+        function openCookie(cookie, message) {
+            if (cookie.classList.contains("open")) return;
+
+            cookie.classList.add("open");
+            cookie.setAttribute("aria-label", "Opened fortune cookie");
+
+            slipText.textContent = message;
+            slip.classList.remove("show");
+            void slip.offsetWidth;
+            slip.classList.add("show");
+
+            hint.textContent = "CLICK THE JAR FOR ANOTHER";
+        }
+
+        jarBtn.addEventListener("click", () => {
+            pulse(jarBtn, "shake", 500);
+
+            // she hasn't opened the last cookie yet: just nudge it
+            if (currentCookie && !currentCookie.classList.contains("open")) {
+                pulse(currentCookie, "wiggle", 600);
+                return;
+            }
+
+            const message = nextMessage();
+
+            stage.textContent = "";
+            slip.classList.remove("show");
+
+            const cookie = document.createElement("button");
+            cookie.type = "button";
+            cookie.className = "stage-cookie";
+            cookie.setAttribute("aria-label", "Open your fortune cookie");
+            cookie.innerHTML = '<span class="half half-l"></span><span class="half half-r"></span>';
+            cookie.addEventListener("click", () => openCookie(cookie, message));
+
+            stage.appendChild(cookie);
+            currentCookie = cookie;
+
+            hint.textContent = "NOW CLICK THE COOKIE";
+        });
+    }
 
 })();
