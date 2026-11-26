@@ -440,6 +440,30 @@ body.toothbrush-theme .flower {
 }
 
 
+/* ---- extra review questions (humor stars + effort scale) ---- */
+body.toothbrush-theme .mini-star.selected {
+    color: var(--accent);
+}
+
+body.toothbrush-theme .score-btn {
+    background: #fff;
+    border: 2px solid #f6c4de;
+    color: var(--pop);
+    font-weight: 600;
+}
+
+body.toothbrush-theme .score-btn:hover {
+    background: #ffe0ef;
+    border-color: var(--accent);
+}
+
+body.toothbrush-theme .score-btn.selected {
+    background: var(--accent);
+    border-color: var(--pop);
+    color: #fff;
+}
+
+
 /* ==========================================
    PHONES
    ========================================== */
