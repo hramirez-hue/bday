@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="enhance.css">
     <link rel="stylesheet" href="themes.css">
+
+    <!-- tilts for the extra photos (6-9) in her gallery -->
+    <style>
+        .polaroid:nth-child(6) { transform: rotate(2deg); }
+        .polaroid:nth-child(7) { transform: rotate(-1deg); }
+        .polaroid:nth-child(8) { transform: rotate(3deg); }
+        .polaroid:nth-child(9) { transform: rotate(-2deg); }
+        .polaroid:nth-child(n+6):hover { transform: rotate(0deg) translateY(-8px); }
+    </style>
 </head>
 
 <body class="yellow-theme">
@@ -136,6 +145,40 @@
                      class="gallery-photo"
                      data-note="+999 aura">
                 <p>mogged</p>
+            </div>
+
+            <!-- NEW PHOTOS: edit the data-note and the caption for each one -->
+
+            <div class="polaroid tilted reveal">
+                <img src="images/her6.jpg"
+                     alt="A favorite picture of you"
+                     class="gallery-photo"
+                     data-note="mini sente">
+                <p>peace</p>
+            </div>
+
+            <div class="polaroid reveal">
+                <img src="images/her7.jpg"
+                     alt="A favorite picture of you"
+                     class="gallery-photo"
+                     data-note="ilong mo nasab">
+                <p>tana di kaw ma weirdohan sako</p>
+            </div>
+
+            <div class="polaroid tilted reveal">
+                <img src="images/her8.jpg"
+                     alt="A favorite picture of you"
+                     class="gallery-photo"
+                     data-note="the man who cant be moved">
+                <p>going back 2 the cornr wer i first saw u</p>
+            </div>
+
+            <div class="polaroid reveal">
+                <img src="images/her9.jpg"
+                     alt="A favorite picture of you"
+                     class="gallery-photo"
+                     data-note="ambot unsay e caption here">
+                <p>cute kaw ngadi ganahan ako</p>
             </div>
 
         </div>
