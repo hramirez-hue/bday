@@ -803,3 +803,91 @@ body.toothbrush-theme .fortune-slip {
         animation: none !important;
     }
 }
+
+
+/* ==========================================
+   EXTRA REVIEW QUESTIONS
+   ========================================== */
+
+/* Humor stars (same look as the main star rating) */
+.mini-star {
+    border: none;
+    background: transparent;
+    color: #d9cdb7;
+    font-size: 32px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.mini-star:hover {
+    transform: scale(1.2);
+}
+
+.mini-star.selected {
+    color: #e3b951;
+}
+
+body.toothbrush-theme .mini-star.selected {
+    color: #d49be9;
+}
+
+/* Effort 1-10 */
+.score-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0 10px;
+}
+
+.score-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 8px;
+    border: 1px solid #eadbbd;
+    border-radius: 20px;
+    background: transparent;
+    color: #8b7659;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.score-btn:hover {
+    background: #fff8e7;
+    border-color: #d8b86f;
+    transform: translateY(-2px);
+}
+
+.score-btn.selected {
+    background: #b58b42;
+    border-color: #b58b42;
+    color: #fff;
+}
+
+body.toothbrush-theme .score-btn {
+    border-color: #ddc4ed;
+    color: #806b91;
+}
+
+body.toothbrush-theme .score-btn:hover {
+    background: #f7edff;
+}
+
+body.toothbrush-theme .score-btn.selected {
+    background: #a879c5;
+    border-color: #a879c5;
+    color: #fff;
+}
+
+@media (max-width: 700px) {
+    .mini-star {
+        font-size: 29px;
+        padding: 4px 6px;
+    }
+
+    .score-row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
