@@ -6,6 +6,7 @@
     <title>hbd lods</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="enhance.css">
+    <link rel="stylesheet" href="themes.css">
 </head>
 
 <body class="yellow-theme">
@@ -600,9 +601,119 @@
                 </div>
 
 
+                <!-- HUMOR RATING -->
+                <div class="review-question">
+                    <h3>04. rate my humor</h3>
+
+                    <p class="review-hint">
+                        1 = wa gyud. 5 = mubo ko ug tawa.
+                    </p>
+
+                    <div class="star-rating" id="humorRating">
+                        <button type="button" class="mini-star" data-rating="1" aria-pressed="false" aria-label="1 star">★</button>
+                        <button type="button" class="mini-star" data-rating="2" aria-pressed="false" aria-label="2 stars">★</button>
+                        <button type="button" class="mini-star" data-rating="3" aria-pressed="false" aria-label="3 stars">★</button>
+                        <button type="button" class="mini-star" data-rating="4" aria-pressed="false" aria-label="4 stars">★</button>
+                        <button type="button" class="mini-star" data-rating="5" aria-pressed="false" aria-label="5 stars">★</button>
+                    </div>
+
+                    <p class="rating-description" id="humorDescription">
+                        Select your rating.
+                    </p>
+                </div>
+
+
+                <!-- FAVORITE PART OF THE WEBSITE -->
+                <div class="review-question">
+                    <h3>05. unsa ang favorite part nimo ani nga website?</h3>
+
+                    <div class="review-options">
+                        <label>
+                            <input type="radio" name="favoritePart" value="The photos">
+                            <span>ang mga pics</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="favoritePart" value="The jar of fortune cookies">
+                            <span>ang jar of cookies</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="favoritePart" value="The 4Lifers agreement">
+                            <span>ang 4Lifers agreement</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="favoritePart" value="The songs">
+                            <span>ang mga kanta</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="favoritePart" value="The letter">
+                            <span>ang letter</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="favoritePart" value="None. It was all boring.">
+                            <span>wala, boring tanan</span>
+                        </label>
+                    </div>
+                </div>
+
+
+                <!-- WHICH SONG WAS BETTER -->
+                <div class="review-question">
+                    <h3>06. unsa ang mas nindot na kanta?</h3>
+
+                    <div class="review-options">
+                        <label>
+                            <input type="radio" name="betterSong" value="Medj corny (the yellow one)">
+                            <span>☀ Medj corny</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="betterSong" value="Fav (the pink one)">
+                            <span>✿ Fav</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="betterSong" value="Both. I can't choose.">
+                            <span>pareho, di ko ma-pili</span>
+                        </label>
+                    </div>
+                </div>
+
+
+                <!-- EFFORT RATING -->
+                <div class="review-question">
+                    <h3>07. rate my effort ani nga website</h3>
+
+                    <p class="review-hint">
+                        1 = wa kaayo. 10 = sobra sobra.
+                    </p>
+
+                    <div class="score-row" id="effortScore">
+                        <button type="button" class="score-btn" data-score="1" aria-pressed="false">1</button>
+                        <button type="button" class="score-btn" data-score="2" aria-pressed="false">2</button>
+                        <button type="button" class="score-btn" data-score="3" aria-pressed="false">3</button>
+                        <button type="button" class="score-btn" data-score="4" aria-pressed="false">4</button>
+                        <button type="button" class="score-btn" data-score="5" aria-pressed="false">5</button>
+                        <button type="button" class="score-btn" data-score="6" aria-pressed="false">6</button>
+                        <button type="button" class="score-btn" data-score="7" aria-pressed="false">7</button>
+                        <button type="button" class="score-btn" data-score="8" aria-pressed="false">8</button>
+                        <button type="button" class="score-btn" data-score="9" aria-pressed="false">9</button>
+                        <button type="button" class="score-btn" data-score="10" aria-pressed="false">10</button>
+                    </div>
+
+                    <p class="rating-description" id="effortDescription">
+                        Select your rating.
+                    </p>
+                </div>
+
+
                 <!-- WRITTEN FEEDBACK -->
                 <div class="review-question">
-                    <h3>04. if naa kay extra comments paki lagay nlng dito</h3>
+                    <h3>08. if naa kay extra comments paki lagay nlng dito</h3>
 
                     <textarea id="reviewFeedback"
                               rows="4"
@@ -650,6 +761,18 @@
                     <p><strong>Would do it again?</strong></p>
                     <p id="receiptAgain"></p>
 
+                    <p><strong>Humor rating:</strong></p>
+                    <p id="receiptHumor"></p>
+
+                    <p><strong>Favorite part of the website:</strong></p>
+                    <p id="receiptPart"></p>
+
+                    <p><strong>Better song:</strong></p>
+                    <p id="receiptSong"></p>
+
+                    <p><strong>Effort rating:</strong></p>
+                    <p id="receiptEffort"></p>
+
                     <p><strong>Additional feedback:</strong></p>
                     <p id="receiptFeedback"></p>
 
@@ -694,6 +817,7 @@
 
     <script src="script.js"></script>
     <script src="enhance.js"></script>
+    <script src="themes.js"></script>
 
 </body>
 </html>
