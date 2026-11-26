@@ -14,6 +14,10 @@
     const PETALS = true;
     // true = confetti when she enters the site and when she signs the contract
     const CONFETTI = true;
+
+    // true  = the 4 extra review questions (04-07) must be answered
+    // false = they are optional (she can skip them)
+    const NEW_QUESTIONS_REQUIRED = true;
     // ------------------------------------------------
 
     // ---- THE FORTUNE COOKIE JAR --------------------
@@ -351,6 +355,10 @@
             "Overall rating: " + byId("receiptRating").textContent,
             "Favorite moment: " + byId("receiptFavorite").textContent,
             "Would do it again?: " + byId("receiptAgain").textContent,
+            "Humor rating: " + byId("receiptHumor").textContent,
+            "Favorite part of the website: " + byId("receiptPart").textContent,
+            "Better song: " + byId("receiptSong").textContent,
+            "Effort rating: " + byId("receiptEffort").textContent,
             "Additional feedback: " + byId("receiptFeedback").textContent
         ].join("\n");
 
@@ -560,5 +568,112 @@
             hint.textContent = "NOW CLICK THE COOKIE";
         });
     }
+
+
+    // ------------------------------------------
+    // 14. EXTRA REVIEW QUESTIONS (04 - 07)
+    // ------------------------------------------
+    const humorStars = document.querySelectorAll(".mini-star");
+    const humorDesc = byId("humorDescription");
+    const effortBtns = document.querySelectorAll(".score-btn");
+    const effortDesc = byId("effortDescription");
+    const reviewErrorEl = byId("reviewError");
+
+    // What shows under the humor stars (edit these!)
+    const humorMessages = {
+        1: "awts bitaw",
+        2: "medj lng noh",
+        3: "ok ra ahaha",
+        4: "kataw ko uy",
+        5: "mubo ko ug tawa ey"
+    };
+
+    // What shows under the effort scale (edit these!)
+    function effortMessage(n) {
+        if (n <= 2) return "wa man ka'y effort bai";
+        if (n <= 4) return "medj lng";
+        if (n <= 6) return "pwde na";
+        if (n <= 8) return "grabi ka effort ui";
+        return "sobra sobra ka na hehe, salamat";
+    }
+
+    let humorValue = 0;
+    let effortValue = 0;
+
+    humorStars.forEach((star) => {
+        star.addEventListener("click", () => {
+            humorValue = Number(star.dataset.rating);
+
+            humorStars.forEach((s) => {
+                const r = Number(s.dataset.rating);
+                s.classList.toggle("selected", r <= humorValue);
+                s.setAttribute("aria-pressed", r === humorValue ? "true" : "false");
+            });
+
+            humorDesc.textContent = humorMessages[humorValue];
+            reviewErrorEl.textContent = "";
+        });
+    });
+
+    effortBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            effortValue = Number(btn.dataset.score);
+
+            effortBtns.forEach((b) => {
+                const on = b === btn;
+                b.classList.toggle("selected", on);
+                b.setAttribute("aria-pressed", on ? "true" : "false");
+            });
+
+            effortDesc.textContent = effortMessage(effortValue);
+            reviewErrorEl.textContent = "";
+        });
+    });
+
+    document
+        .querySelectorAll('input[name="favoritePart"], input[name="betterSong"]')
+        .forEach((input) => {
+            input.addEventListener("change", () => { reviewErrorEl.textContent = ""; });
+        });
+
+    // Runs BEFORE script.js's submit handler (capture phase on the form),
+    // so we can check the new questions and fill in the receipt.
+    document.querySelector(".review-paper").addEventListener("click", (e) => {
+        if (!e.target.closest("#submitReview")) return;
+
+        // If an original question is missing, let script.js show its own message
+        const originalDone =
+            document.querySelector(".rating-star.selected") &&
+            document.querySelector('input[name="favoriteMoment"]:checked') &&
+            document.querySelector('input[name="again"]:checked');
+
+        if (!originalDone) return;
+
+        const part = document.querySelector('input[name="favoritePart"]:checked');
+        const song = document.querySelector('input[name="betterSong"]:checked');
+
+        if (NEW_QUESTIONS_REQUIRED) {
+            let problem = "";
+
+            if (!humorValue) problem = "rate mo sa humor ko pls";
+            else if (!part) problem = "pili sa ug favorite part";
+            else if (!song) problem = "pili sa ug kanta";
+            else if (!effortValue) problem = "rate mo sa effort ko pls";
+
+            if (problem) {
+                reviewErrorEl.textContent = problem;
+                e.stopPropagation();
+                e.preventDefault();
+                return;
+            }
+        }
+
+        const skipped = "No answer (skip ata ni)";
+
+        byId("receiptHumor").textContent = humorValue ? humorValue + " out of 5 stars" : skipped;
+        byId("receiptPart").textContent = part ? part.value : skipped;
+        byId("receiptSong").textContent = song ? song.value : skipped;
+        byId("receiptEffort").textContent = effortValue ? effortValue + " out of 10" : skipped;
+    }, true);
 
 })();
