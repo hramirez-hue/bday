@@ -328,7 +328,7 @@ function createPhotoNote(photo) {
         const message = photo.dataset.note ||
             (caption && caption.tagName === "P"
                 ? caption.textContent.trim()
-                : "A little moment worth remembering. ♡");
+                : "A little moment worth remembering. ");
 
         const messageElement = document.createElement("p");
 
@@ -507,12 +507,12 @@ signContract.addEventListener("click", () => {
     if (moreOption.checked) {
 
         futureStatus.textContent =
-            "FUTURE POSSIBILITIES: OPEN TO EXPLORING ♡";
+            "CLAUSE 67: APPROVED";
 
     } else {
 
         futureStatus.textContent =
-            "FUTURE POSSIBILITIES: PENDING";
+            "CLAUSE 67: REJECTED (dang)";
 
     }
 
@@ -546,7 +546,7 @@ openLetter.addEventListener("click", () => {
 
     openLetter.setAttribute("aria-expanded", "true");
 
-    envelopeHint.textContent = "YOUR NOTE IS OPEN ♡";
+    envelopeHint.textContent = "YOUR NOTE IS OPEN ";
 
     messageLetter.hidden = false;
 
