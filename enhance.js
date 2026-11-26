@@ -581,20 +581,20 @@
 
     // What shows under the humor stars (edit these!)
     const humorMessages = {
-        1: "damn ok",
-        2: ":C",
-        3: "so u hate me",
-        4: "e full dkn pls",
-        5: "yey"
+        1: "js say u hate me",
+        2: "kalain",
+        3: "way lami",
+        4: "naaaaaa",
+        5: "stawwpppp"
     };
 
     // What shows under the effort scale (edit these!)
     function effortMessage(n) {
         if (n <= 2) return "k wtv";
-        if (n <= 4) return "kalain";
-        if (n <= 6) return "na dayun";
+        if (n <= 4) return ":C";
+        if (n <= 6) return "na kalain";
         if (n <= 8) return "dont be shy";
-        return "yieeeeee";
+        return "yieee";
     }
 
     let humorValue = 0;
@@ -655,10 +655,10 @@
         if (NEW_QUESTIONS_REQUIRED) {
             let problem = "";
 
-            if (!humorValue) problem = "rate my humor first";
-            else if (!part) problem = "pick ur fav part naa";
-            else if (!song) problem = "pili naay ng kanta";
-            else if (!effortValue) problem = "rate my website";
+            if (!humorValue) problem = "rate my humor pls";
+            else if (!part) problem = "pick a fav part";
+            else if (!song) problem = "pick naay ng song";
+            else if (!effortValue) problem = "rate my website first pls";
 
             if (problem) {
                 reviewErrorEl.textContent = problem;
@@ -668,12 +668,52 @@
             }
         }
 
-        const skipped = "No answer (k)";
+        const skipped = "No answer (skip ata ni)";
 
         byId("receiptHumor").textContent = humorValue ? humorValue + " out of 5 stars" : skipped;
         byId("receiptPart").textContent = part ? part.value : skipped;
         byId("receiptSong").textContent = song ? song.value : skipped;
         byId("receiptEffort").textContent = effortValue ? effortValue + " out of 10" : skipped;
     }, true);
+
+    // ------------------------------------------
+    // 15. ENVELOPE: smoother opening sequence
+    //     1) seal pops, flap opens   2) note slides up out of the envelope
+    //     3) the full letter fades in below   4) page scrolls to it gently
+    //     (this replaces script.js's instant open for this one button)
+    // ------------------------------------------
+    const openLetterBtn = byId("openLetter");
+    const letterEl = byId("messageLetter");
+    const envelopeHintEl = byId("envelopeHint");
+
+    if (openLetterBtn && letterEl) {
+        const letterBox = openLetterBtn.closest(".message-container");
+
+        // Capture phase on the parent so this runs before script.js's own handler
+        letterBox.addEventListener("click", (e) => {
+            if (!e.target.closest("#openLetter")) return;
+
+            e.stopPropagation();
+            if (openLetterBtn.classList.contains("is-open")) return;
+
+            openLetterBtn.classList.add("is-open");
+            openLetterBtn.setAttribute("aria-expanded", "true");
+            envelopeHintEl.textContent = "YOUR NOTE IS OPEN \u2661";
+
+            const showAfter = reduceMotion ? 0 : 1000;
+            const scrollAfter = reduceMotion ? 0 : 500;
+
+            setTimeout(() => {
+                letterEl.hidden = false;
+                letterEl.setAttribute("tabindex", "-1");
+
+                setTimeout(() => {
+                    const tall = letterEl.offsetHeight > window.innerHeight * 0.85;
+                    letterEl.scrollIntoView({ behavior: "smooth", block: tall ? "start" : "center" });
+                    letterEl.focus({ preventScroll: true });
+                }, scrollAfter);
+            }, showAfter);
+        }, true);
+    }
 
 })();
