@@ -125,11 +125,11 @@ function selectSong(songName) {
 
     if (songName === "yellow") {
 
-        playerStatus.textContent = "Medjo clichet siya pero wtv. ☀";
+        playerStatus.textContent = "Medjo cliche siya pero wtv";
 
     } else {
 
-        playerStatus.textContent = "iykyk >:D. ✿";
+        playerStatus.textContent = "iykyk";
 
     }
 
