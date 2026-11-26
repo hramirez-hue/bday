@@ -581,20 +581,20 @@
 
     // What shows under the humor stars (edit these!)
     const humorMessages = {
-        1: "awts bitaw",
-        2: "medj lng noh",
-        3: "ok ra ahaha",
-        4: "kataw ko uy",
-        5: "mubo ko ug tawa ey"
+        1: "damn ok",
+        2: ":C",
+        3: "so u hate me",
+        4: "e full dkn pls",
+        5: "yey"
     };
 
     // What shows under the effort scale (edit these!)
     function effortMessage(n) {
-        if (n <= 2) return "wa man ka'y effort bai";
-        if (n <= 4) return "medj lng";
-        if (n <= 6) return "pwde na";
-        if (n <= 8) return "grabi ka effort ui";
-        return "sobra sobra ka na hehe, salamat";
+        if (n <= 2) return "k wtv";
+        if (n <= 4) return "kalain";
+        if (n <= 6) return "na dayun";
+        if (n <= 8) return "dont be shy";
+        return "yieeeeee";
     }
 
     let humorValue = 0;
@@ -655,10 +655,10 @@
         if (NEW_QUESTIONS_REQUIRED) {
             let problem = "";
 
-            if (!humorValue) problem = "rate mo sa humor ko pls";
-            else if (!part) problem = "pili sa ug favorite part";
-            else if (!song) problem = "pili sa ug kanta";
-            else if (!effortValue) problem = "rate mo sa effort ko pls";
+            if (!humorValue) problem = "rate my humor first";
+            else if (!part) problem = "pick ur fav part naa";
+            else if (!song) problem = "pili naay ng kanta";
+            else if (!effortValue) problem = "rate my website";
 
             if (problem) {
                 reviewErrorEl.textContent = problem;
@@ -668,7 +668,7 @@
             }
         }
 
-        const skipped = "No answer (skip ata ni)";
+        const skipped = "No answer (k)";
 
         byId("receiptHumor").textContent = humorValue ? humorValue + " out of 5 stars" : skipped;
         byId("receiptPart").textContent = part ? part.value : skipped;
